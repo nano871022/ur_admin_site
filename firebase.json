@@ -1,0 +1,31 @@
+{
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "hosting": {
+    "public": "dist/ur_admin_site",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/auth",
+        "destination": "/browser/auth/index.html"
+      },{
+        "source": "/messages",
+        "destination": "/browser/messages/index.html"
+      },{
+        "source": "**",
+        "destination": "/browser/index.html"
+      }
+    ]
+  },
+  "emulators": {
+    "hosting": {
+      "port": 5000,
+      "host": "0.0.0.0"
+    }
+  }
+}
