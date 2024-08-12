@@ -27,9 +27,9 @@ div > div > p {
   	border-top: solid 1px #bbc4fe;
   	padding-top: 10px;
   	margin-top: 20px;
-  	margin-bottom: 10px;
+  	padding-bottom: 10px;
   	position: fixed;
   	bottom: 10px;
   	width: 900px;
-  	background: white;
+  	background: #ffffffe5;
 }

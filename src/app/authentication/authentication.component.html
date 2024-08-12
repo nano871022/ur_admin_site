@@ -1,1 +1,11 @@
-<p>authentication works!</p>
+
+<div class="login">
+	<p>Iniciar Sessión</p>
+
+	<p [hidden]="!isLogged">{{email}}</p>
+
+	<button type="button"  (click)="logOut()" [hidden]="!isLogged">Cerrar Sessión</button>
+
+	<button type="button"  [hidden]="isLogged" appGoogleSso>Iniciar Sessión con Google</button>
+
+</div>

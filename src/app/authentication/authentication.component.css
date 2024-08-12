@@ -1,0 +1,11 @@
+.login{
+	width: fit-content;
+	border: 1px solid black;
+	padding: 10px;
+	border-radius: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.login > p{
+	text-align: center;
+}

@@ -14,6 +14,10 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
+Run command to compile to test in local machine to redirect files to browser folder into dest folder
+
+> build ng build --base-href /browser/
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
@@ -38,6 +42,11 @@ command to connect with firebase
 
 test application in local
 > firebase emulators:start
+
+Run test mode firebase app with other settings
+> firebase emulators:start
+
+
 steps to setting firebase
  
 * install firebase
