@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-//import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-authentication',
@@ -9,10 +11,9 @@ import { Component } from '@angular/core';
 export class AuthenticationComponent {
   email = "";
   isLogged = false;
+  private credential : any;
   
-  constructor() {
-    this.email= "<<add your email.>>";
-  }
+  constructor(private auth: AngularFireAuth) {}
 
   logOut():void {
     console.log("loging out...");
@@ -23,10 +24,12 @@ export class AuthenticationComponent {
     
   }
 
-  logIn():void{
+  async logIn(){
+    var credential = await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     console.log("loging in...");
-    this.email = "loging in...";
+    this.email = "loging in..."+credential.additionalUserInfo?.profile;
     this.isLogged = true;
+    this.credential = credential;
   }
 
 }

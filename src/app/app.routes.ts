@@ -6,9 +6,9 @@ import { MainComponent } from './main/main.component';
 import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
- { path: 'auth', component: AuthenticationComponent },
+ { path: 'auth'    , component: AuthenticationComponent },
  { path: 'messages', component: MessagesComponent },
- { path: 'main', component: MainComponent },
+ { path: 'main'    , component: MainComponent },
 ];
 @NgModule({
 	imports: [RouterModule.forRoot(routes)],	

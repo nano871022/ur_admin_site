@@ -2,10 +2,14 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app.routes';
 import { AppComponent } from './app.component';
-import { AngularFireAuth } from '@angular/fire/compat';
+import { FIREBASE_OPTIONS, AngularFireAuth } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 
 @NgModule({
 	declarations: [	AppComponent],
@@ -14,9 +18,14 @@ import { FormsModule } from '@angular/forms';
 		AngularFireModule.initializeApp(environment.firebaseConfig),
 		BrowserModule,
 		AppRoutingModule,
-		FormsModule
+		FormsModule,
+		provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+		provideAuth(() => getAuth()),
+		provideFirestore(() => getFirestore()),
+
+		)
 	],
-	providers: [],
+	providers: [{provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

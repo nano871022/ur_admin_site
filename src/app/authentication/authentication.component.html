@@ -6,6 +6,6 @@
 
 	<button type="button"  (click)="logOut()" [hidden]="!isLogged">Cerrar Sessión</button>
 
-	<button type="button"  [hidden]="isLogged" appGoogleSso>Iniciar Sessión con Google</button>
+	<button type="button"  [hidden]="isLogged"  (click)="logIn()">Iniciar Sessión con Google</button>
 
 </div>

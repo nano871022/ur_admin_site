@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:ur_admin_site": "node dist/ur_admin_site/server/server.mjs"
+    "serve:ssr:ur_admin_site": "node dist/ur_admin_site/server/server.mjs",
+    "local": "firebase emulators:start --base-href /browser/"
   },
   "private": true,
   "dependencies": {
