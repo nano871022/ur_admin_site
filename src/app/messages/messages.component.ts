@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-messages',
@@ -9,4 +10,10 @@ import { Component } from '@angular/core';
 })
 export class MessagesComponent {
 
+  constructor(private router: Router) {}
+  goMain(){
+    this.router.navigate(['main']);
+    }
+
+  clean(){}
 }

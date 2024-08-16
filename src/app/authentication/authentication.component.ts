@@ -2,34 +2,49 @@ import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
+  standalone: true,
   selector: 'app-authentication',
   templateUrl: './authentication.component.html',
   styleUrls: ['./authentication.component.css']
 })
 export class AuthenticationComponent {
-  email = "";
+  email : String | null = null;
   isLogged = false;
   private credential : any;
   
-  constructor(private auth: AngularFireAuth) {}
+  constructor(private auth: AngularFireAuth,private router: Router) {
+    this.validateLogged();
+  }
 
   logOut():void {
-    console.log("loging out...");
-    this.email = "loging out...";
-    this.isLogged = false;
-    //public angularFireAuth: AngularFireAuth
-    //this.angularFireAuth.signOut(); 
-    
+    this.auth.signOut().then(()=>{;
+      this.email = null;
+      this.isLogged = false;
+      this.router.navigate(['/']);
+    });
+  }
+
+  async validateLogged(){
+    this.auth.onAuthStateChanged((user)=>{
+      if(user !== null){
+        this.isLogged = true;
+        this.email = user.email;
+        this.router.navigate(['/main']);
+      }
+    });
   }
 
   async logIn(){
     var credential = await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-    console.log("loging in...");
-    this.email = "loging in..."+credential.additionalUserInfo?.profile;
     this.isLogged = true;
     this.credential = credential;
+    if(credential !== null && credential.user !== null){
+      this.email = credential.user.email;
+    }
+    this.router.navigate(['/main']);
   }
 
 }

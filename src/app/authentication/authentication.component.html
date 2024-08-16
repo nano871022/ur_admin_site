@@ -1,11 +1,11 @@
 
 <div class="login">
-	<p>Iniciar Sessión</p>
+	@if (isLogged){
+		<span>{{email}}</span>
 
-	<p [hidden]="!isLogged">{{email}}</p>
+		<button type="button" (click)="logOut()" >Cerrar Sessión</button>
+	}@else{
 
-	<button type="button"  (click)="logOut()" [hidden]="!isLogged">Cerrar Sessión</button>
-
-	<button type="button"  [hidden]="isLogged"  (click)="logIn()">Iniciar Sessión con Google</button>
-
+		<button type="button" (click)="logIn()">Iniciar Sessión con Google</button>
+	}
 </div>

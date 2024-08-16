@@ -1,11 +1,8 @@
 .login{
 	width: fit-content;
-	border: 1px solid black;
-	padding: 10px;
-	border-radius: 10px;
-	margin-left: auto;
-	margin-right: auto;
 }
-.login > p{
+.login > span{
 	text-align: center;
+	font-size: small ;
+	margin-right: 10px;
 }

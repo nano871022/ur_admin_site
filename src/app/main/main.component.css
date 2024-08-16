@@ -1,3 +1,12 @@
 nav{
 	float:right;
 }
+
+nav > ul > li > a {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+nav > ul {
+	list-style: disclosure-closed;
+}

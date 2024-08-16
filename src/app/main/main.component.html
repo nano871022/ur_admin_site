@@ -1,7 +1,14 @@
 <div>
 	<h3>Administración de App</h3>
 	<p> Los Siguientes enlaces son las funcionalidades habilitadas con su perfil </p>
+	<router-outlet />
 </div>
 <nav>
-	<a href="/messages">Mensajes</a>
+	<ul>
+		<li>
+			<a routerLink="messages" routerLinkActive="active" (click)="goMessages()">Mensajes</a>
+		</li>
+	</ul>
 </nav>
+
+

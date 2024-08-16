@@ -11,14 +11,14 @@
     ],
     "rewrites": [
     {
-        "source": "/auth",
-        "destination": "/browser/auth/index.html"
-      },{
         "source": "/messages",
         "destination": "/browser/messages/index.html"
       },{
         "source": "/main",
         "destination": "/browser/main/index.html"
+      },{
+        "source": "/",
+        "destination": "/browser/index.csr.html"
       },
       {
         "source": "**",

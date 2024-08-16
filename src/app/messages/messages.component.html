@@ -1,1 +1,16 @@
-<p>messages works!</p>
+<nav>
+  <a routerLink="/main" (click)="goMain()">Principal</a> > Mensajes
+</nav>
+<form>
+	<span>Mensaje a Todos los dispositivos moviles con la app instalada</span>
+	<br/>
+	<input type="text" name="title"/>
+	<br/>
+	<textarea name="message" rows="10" columns="40"></textarea>
+	
+	<div>
+		<button type="submit">Enviar</button>
+		<button (click)="clean()">Limpiar</button>
+	</div>
+
+</form>

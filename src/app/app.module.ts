@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { AuthenticationComponent } from './authentication/authentication.component';
 
 @NgModule({
 	declarations: [	AppComponent],
@@ -22,6 +23,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 		provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
 		provideAuth(() => getAuth()),
 		provideFirestore(() => getFirestore()),
+		AuthenticationComponent,
 
 		)
 	],
