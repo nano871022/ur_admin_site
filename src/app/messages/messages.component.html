@@ -1,12 +1,12 @@
 <nav>
   <a routerLink="/main" (click)="goMain()">Principal</a> > Mensajes
 </nav>
-<form>
+<form  (ngSubmit)="onSubmit()">
 	<span>Mensaje a Todos los dispositivos moviles con la app instalada</span>
 	<br/>
-	<input type="text" name="title"/>
+	<input type="text" [(ngModel)]="title" placeholder="Ingrese Titulo del mensaje" />
 	<br/>
-	<textarea name="message" rows="10" columns="40"></textarea>
+	<textarea [(ngModel)]="message" rows="10" columns="40" placeholder="Ingrese el mensaje a enviar"></textarea>
 	
 	<div>
 		<button type="submit">Enviar</button>

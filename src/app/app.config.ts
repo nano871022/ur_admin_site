@@ -1,5 +1,6 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
@@ -11,6 +12,8 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
+import { CloudMessageSenderService } from './services/message-sender/cloud-message-sender.service';
+
 export const appConfig: ApplicationConfig = {
   providers: [
       provideZoneChangeDetection({ eventCoalescing: true })
@@ -19,6 +22,8 @@ export const appConfig: ApplicationConfig = {
     , provideFirebaseApp(() => initializeApp(environment.firebaseConfig))
     , provideFirestore(() => getFirestore())
     , provideAuth(() => getAuth())
+    , provideHttpClient()
     , {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}
+    , CloudMessageSenderService
     ]
 };
