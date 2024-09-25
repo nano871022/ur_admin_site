@@ -2,3 +2,8 @@ nav > a {
 	text-decoration: underline;
 	cursor: pointer;
 }
+.messages{
+	margin: 20px;
+	padding: 10px;
+	background-color: lightyellow;
+}

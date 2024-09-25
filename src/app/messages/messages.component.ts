@@ -15,6 +15,8 @@ export class MessagesComponent {
 
   title : string = "";
   message : string = "";
+  result : string = "";
+  showMessage: boolean = false;
 
   constructor(private router: Router, private senderSvc:CloudMessageSenderService) {}
 
@@ -23,17 +25,15 @@ export class MessagesComponent {
   }
 
   onSubmit():void{
+    this.senderSvc.requestPermission();
     const notification :Notification = {
                                           title :this.title, 
                                           body: this.message
                                         };
-    this.senderSvc.send(notification).subscribe({
-      next: (res) => {
-        console.log("Notification sent succesfull.",res); 
-      },
-      error: (err) => {
-        console.error("Error sending notification",err);
-      }
+    this.senderSvc.send(notification).subscribe( data => {
+      this.showMessage = true
+      this.result = (data as any).description;
+      this.clean();
       
     });
   }

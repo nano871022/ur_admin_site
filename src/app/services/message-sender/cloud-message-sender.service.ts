@@ -3,24 +3,43 @@ import { Notification, Notifications } from '../../model/notification.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import { getMessaging } from "firebase/messaging";
+import { GetTokenService } from "../tokens/get-token.service";
+import { AngularFireMessaging } from '@angular/fire/compat/messaging';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CloudMessageSenderService {
 
-  constructor(private http:HttpClient) { }
+  token:string | null = null;
+  constructor(private http:HttpClient, private tokenSvc:GetTokenService) { 
+    this.requestPermission();
+  }
 
   send(notification: Notification):Observable<any> {
     const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
-      'Authorization': 'key=' + environment.firebaseConfig.apiKey
+      'Authorization': 'Bearer ' + this.token,
+      'Application':'ur-admin-site'
     });
-    const token = environment.firebaseConfig.messager.messagerToken;
     var request : Notifications = {
                                     notifications: notification, 
-                                    to : token
+                                    to : "allUsers"
                                   };
+    console.log("url: ",environment.firebaseConfig.messager.messageUrl);
+    console.log("headers: ",headers);
     return this.http.post<any>(environment.firebaseConfig.messager.messageUrl, request, { headers: headers });
   }
+
+  requestPermission(){
+    console.log("== requestPermission");
+   this.tokenSvc.getToken().subscribe((token) => {
+     this.token = (token as any).token;
+   })
+  } 
+
+
 }

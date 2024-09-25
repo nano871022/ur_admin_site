@@ -13,6 +13,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 import { CloudMessageSenderService } from './services/message-sender/cloud-message-sender.service';
+import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,6 +24,7 @@ export const appConfig: ApplicationConfig = {
     , provideFirestore(() => getFirestore())
     , provideAuth(() => getAuth())
     , provideHttpClient()
+    , provideMessaging(() => getMessaging())
     , {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}
     , CloudMessageSenderService
     ]
