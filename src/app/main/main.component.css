@@ -1,12 +1,10 @@
-nav{
-	float:right;
+a > span {
+	vertical-align: super;
+	padding-left: 10px;
 }
-
-nav > ul > li > a {
-	text-decoration: underline;
-	cursor: pointer;
+mat-drawer {
+	align-content: center;
 }
-
-nav > ul {
-	list-style: disclosure-closed;
+.menu {
+  padding: 20px;
 }

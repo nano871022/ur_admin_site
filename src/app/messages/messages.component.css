@@ -1,3 +1,15 @@
+mat-form-field{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+nav {
+	padding-left: 5px;
+	padding-top: 10px;
+	padding-bottom: 15px;
+	background-color: lightgrey;
+	margin-bottom: 10px;
+}
 nav > a {
 	text-decoration: underline;
 	cursor: pointer;
@@ -6,4 +18,11 @@ nav > a {
 	margin: 20px;
 	padding: 10px;
 	background-color: lightyellow;
+}
+.span-center{
+	padding-left: 5px;
+	vertical-align: super;
+}
+.tittle{
+	margin-bottom: 15px;
 }

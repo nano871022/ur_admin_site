@@ -4,10 +4,13 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthenticationComponent } from './authentication/authentication.component';
 
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AuthenticationComponent, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, AuthenticationComponent, RouterLink, RouterLinkActive, MatToolbarModule, MatIconModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

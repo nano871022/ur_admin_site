@@ -1,18 +1,4 @@
-.header{
-	height: 60px;
-	background: #bbc4fe;
-	border-radius: 10px;
-	margin-bottom: 30px;
-}
-.header > ul{
-	list-style-type: none;
-	display: block ruby;
-}
-.header > ul > li:last-child{
-	float: right;
-	padding-top: 20px;
-	padding-right: 10px;
-}
+
 .body{
 	width: 900px;
 	margin-left: auto;
@@ -32,4 +18,10 @@ div > div > p {
   	bottom: 10px;
   	width: 900px;
   	background: white;
+}
+.spacer{
+	flex: 1 1 auto;
+}
+div > mat-toolbar {
+	background: #bbc4fe;;
 }

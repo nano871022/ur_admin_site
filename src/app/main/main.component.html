@@ -1,14 +1,24 @@
-<div>
-	<h3>Administración de App</h3>
-	<p> Los Siguientes enlaces son las funcionalidades habilitadas con su perfil </p>
-	<router-outlet />
-</div>
-<nav>
-	<ul>
-		<li>
-			<a routerLink="messages" routerLinkActive="active" (click)="goMessages()">Mensajes</a>
-		</li>
-	</ul>
-</nav>
+<mat-drawer-container >
+	<mat-drawer mode="side" opened>
+		<div class="menu">
+			<span>Menú</span>
+			<ul>
+				<li>
+					<a (click)="goMessages()" >
+						<mat-icon>message</mat-icon>
+						<span>Mensajes</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</mat-drawer>
+	<mat-drawer-content>
+		<div>
+			<h3>Administración de App</h3>
+			<p> Los Siguientes enlaces son las funcionalidades habilitadas con su perfil </p>
+			<router-outlet />
+		</div>
+	</mat-drawer-content>
+</mat-drawer-container>
 
 

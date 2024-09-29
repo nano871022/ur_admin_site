@@ -1,21 +1,40 @@
 <nav>
-  <a routerLink="/main" (click)="goMain()">Principal</a> > Mensajes
+  <a routerLink="/main" (click)="goMain()">
+  	<mat-icon>home</mat-icon>
+  	<span class="span-center">Principal</span>
+	</a> > 
+	<mat-icon>message</mat-icon>
+	<span class="span-center">Mensajes</span>
 </nav>
 <form  (ngSubmit)="onSubmit()">
-	<span>Mensaje a Todos los dispositivos moviles con la app instalada</span>
-	<br/>
-	<input type="text" [(ngModel)]="title" placeholder="Ingrese Titulo del mensaje" />
-	<br/>
-	<textarea [(ngModel)]="message" rows="10" columns="40" placeholder="Ingrese el mensaje a enviar"></textarea>
+
+	<span class="tittle">Mensaje a Todos los dispositivos moviles con la app instalada</span>
+	
+	<mat-form-field>
+		<mat-label>Titulo</mat-label>
+		<input [(ngModel)]="title" placeholder="Ingrese Titulo del mensaje" matInput/>
+	</mat-form-field>
+	
+	<mat-form-field>
+		<mat-label>Mensaje</mat-label>
+		<textarea [(ngModel)]="message" placeholder="Ingrese el mensaje a enviar" matInput></textarea>
+	</mat-form-field>
 	
 	<div>
-		<button type="submit">Enviar</button>
-		<button (click)="clean()">Limpiar</button>
-	</div>
 
-<br/>
-	<div class="messages">
-		{{ result }}
+		<button type="submit" mat-flat-button>
+			<mat-icon>send</mat-icon>
+      Enviar
+		</button>
+
+		<button (click)="clean()" mat-flat-button>
+			<mat-icon>clear</mat-icon>			
+			Limpiar
+		</button>
+
 	</div>
+@if (waiting){
+	<mat-spinner></mat-spinner>
+}
 
 </form>

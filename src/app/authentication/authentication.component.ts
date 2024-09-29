@@ -3,12 +3,15 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon'
 
 @Component({
   standalone: true,
   selector: 'app-authentication',
   templateUrl: './authentication.component.html',
-  styleUrls: ['./authentication.component.css']
+  styleUrls: ['./authentication.component.css'],
+  imports:[MatButtonModule,MatIconModule]
 })
 export class AuthenticationComponent {
   email : String | null = null;

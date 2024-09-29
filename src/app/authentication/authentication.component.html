@@ -2,10 +2,14 @@
 <div class="login">
 	@if (isLogged){
 		<span>{{email}}</span>
-
-		<button type="button" (click)="logOut()" >Cerrar Sessión</button>
+		<button mat-mini-fab (click)="logOut()" >
+			<mat-icon>logout</mat-icon>
+		</button>
 	}@else{
 
-		<button type="button" (click)="logIn()">Iniciar Sessión con Google</button>
+		<button mat-fab extended (click)="logIn()">
+			<mat-icon>login</mat-icon>
+		Iniciar Sessión con Google
+		</button>
 	}
 </div>

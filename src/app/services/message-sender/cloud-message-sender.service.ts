@@ -34,10 +34,12 @@ export class CloudMessageSenderService {
     return this.http.post<any>(environment.firebaseConfig.messager.messageUrl, request, { headers: headers });
   }
 
-  requestPermission(){
+  requestPermission(): any{
     console.log("== requestPermission");
-   this.tokenSvc.getToken().subscribe((token) => {
+   this.tokenSvc.getToken().subscribe({next: token => {
      this.token = (token as any).token;
+   },
+   error: err => { console.log("===ERROR: "+err); return err ; }
    })
   } 
 
