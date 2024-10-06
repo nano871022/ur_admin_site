@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterLink, Router, RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [RouterOutlet, MatSidenavModule, MatIconModule, MatButtonModule],
+  imports: [RouterLink,RouterOutlet, MatSidenavModule, MatIconModule, MatButtonModule,MatListModule],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })

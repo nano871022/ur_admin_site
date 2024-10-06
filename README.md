@@ -3,6 +3,17 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.3.
 
+## settings
+
+we need set two links folder to project
+
+* .firebase on root folder save into properties private project
+> ln -s ../folder/.firebase/on/properties/private/project/ .firebase
+
+* envitonment.ts and environments.development.ts on src/environments folder use hard link, that files is into properties private project site admin folder and enviroment folders
+> ln ../folder/enviroments/on/properties/private/project/environments.ts 
+> ln ../folder/enviroments/on/properties/private/project/environments.development.ts 
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

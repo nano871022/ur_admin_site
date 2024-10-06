@@ -10,10 +10,7 @@
       "**/node_modules/**"
     ],
     "rewrites": [
-    {
-        "source": "/messages",
-        "destination": "/browser/messages/index.html"
-      },{
+      { 
         "source": "/main",
         "destination": "/browser/main/index.html"
       },{

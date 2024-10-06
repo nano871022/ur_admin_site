@@ -1,0 +1,50 @@
+<h2>Enlaces</h2>
+<div class="container responsive-grid">
+	<mat-card appearance="outlined">
+		<mat-card-header>
+			<mat-card-title>
+				<span>PQR Facturación</span> 
+			</mat-card-title>
+		</mat-card-header>
+		<mat-card-content>
+			<span>{{billingUrl}}</span>
+			@if (waitBillingSpinner) {
+				<mat-spinner></mat-spinner>
+			}
+		</mat-card-content>
+		<mat-card-actions align="end">
+			@if (hasBillingUrl ) { 
+				<a href="{{billingUrl}}"
+					target="_blank"
+					mat-stroked-button> 
+					<mat-icon>receipt_long</mat-icon>
+					ir
+				</a> 
+			}
+		</mat-card-actions>
+	</mat-card>
+	<mat-card appearance="outlined">
+		<mat-card-header>
+			<mat-card-title>
+				<span>PQR General </span>
+			</mat-card-title> 
+		</mat-card-header>
+		<mat-card-content>
+			<span>{{generalUrl}}</span>
+			@if (waitGeneralSpinner) {
+				<mat-spinner></mat-spinner>	
+			}
+			
+		</mat-card-content>
+		<mat-card-actions align="end">
+			@if (hasGeneralUrl ) { 
+				<a href="{{generalUrl}}"
+					target="_blank"
+					mat-stroked-button> 
+					<mat-icon>description</mat-icon>
+					ir 
+				</a> 
+			}
+		</mat-card-actions>
+	</mat-card>
+</div>

@@ -1,23 +1,24 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Notification } from '../model/notification.model';
-import { CloudMessageSenderService } from '../services/message-sender/cloud-message-sender.service';
-import { FormsModule } from '@angular/forms';
+import { Notification } from '@app/model/notification.model';
+import { CloudMessageSenderService } from '@services/message-sender/cloud-message-sender.service';
+import { FormsModule,FormBuilder,FormGroup,Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-messages',
   standalone: true,
-  imports: [ FormsModule, MatButtonModule, MatIconModule, MatInputModule, MatFormFieldModule, MatProgressSpinnerModule],
+  imports: [ ReactiveFormsModule,FormsModule, MatButtonModule, MatIconModule, MatInputModule, MatFormFieldModule, MatProgressSpinnerModule, MatCardModule],
   templateUrl: './messages.component.html',
   styleUrl: './messages.component.css'
 })
-export class MessagesComponent {
+export class MessagesComponent implements OnInit {
   private _snackBar = inject(MatSnackBar);
 
   title : string = "";
@@ -25,7 +26,16 @@ export class MessagesComponent {
   result : string = "";
   waiting: boolean = false;
 
-  constructor(private router: Router, private senderSvc:CloudMessageSenderService) {}
+  myForm: FormGroup;
+
+  constructor(private router: Router, private senderSvc:CloudMessageSenderService, public formBuilder:FormBuilder) {
+    this.myForm = this.formBuilder.group({
+      title: ['', [Validators.required, Validators.minLength(5)]],
+      message: ['', [Validators.required, Validators.minLength(10)]]
+    });
+  }
+
+  ngOnInit(){}
 
   goMain(){
     this.router.navigate(['main']);

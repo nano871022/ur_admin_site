@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AuthenticationComponent } from './authentication/authentication.component';
+import { AuthenticationComponent } from '@components/authentication/authentication.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';

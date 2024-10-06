@@ -11,27 +11,26 @@ import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 @Injectable({
   providedIn: 'root'
 })
-export class CloudMessageSenderService {
+export class DataService {
 
-  token:string | null = null;
+   token:string | null = null;
+   
   constructor(private http:HttpClient, private tokenSvc:GetTokenService) { 
     this.requestPermission();
   }
 
-  send(notification: Notification):Observable<any> {
-    const headers = new HttpHeaders({
+
+  getData(tokenName: string):Observable<any>{
+     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.token,
       'Application':'ur-admin-site'
     });
-    var request : Notifications = {
-                                    notifications: notification, 
-                                    to : "allUsers"
-                                  };
-    console.log("url: ",environment.firebaseConfig.messager.messageUrl);
+    
+    console.log("url: ",environment.firebaseConfig.data.url);
     console.log("headers: ",headers);
-    return this.http.post<any>(environment.firebaseConfig.messager.messageUrl, request, { headers: headers });
+    return this.http.get<any>(environment.firebaseConfig.data.url+'/'+tokenName, { headers: headers }); 
   }
 
   requestPermission(): any{
@@ -42,6 +41,4 @@ export class CloudMessageSenderService {
    error: err => { console.log("===ERROR: "+err); return err ; }
    })
   } 
-
-
 }

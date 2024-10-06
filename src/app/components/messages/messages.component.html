@@ -1,0 +1,66 @@
+<form  [formGroup]="myForm" (ngSubmit)="onSubmit()" novalidate>
+<mat-card>
+	<mat-card-header>
+		<mat-card-title><span class="title">Mensaje a Todos los dispositivos moviles con la app instalada</span></mat-card-title>
+		<mat-card-subtitle>
+			@if (waiting){
+				<mat-spinner></mat-spinner>	
+			}
+		</mat-card-subtitle>
+	</mat-card-header>
+	<mat-card-content>
+
+	<mat-form-field>
+		<mat-label>Asunto</mat-label>
+		<input [(ngModel)]="title" 
+				formControlName="title"
+				placeholder="Ingrese Asunto del mensaje" 
+				matInput/>
+		 @if(myForm.get('title')?.errors && myForm.get('title')?.dirty){
+			@if(myForm.get('title')?.hasError('required')){
+			<mat-error>Asunto es requerido</mat-error>
+			}
+			@if(myForm.get('title')?.hasError('minlength')){
+			<mat-error>El asunto es muy corto</mat-error>
+			}
+		}
+	</mat-form-field>
+	
+	<mat-form-field>
+		<mat-label>Mensaje</mat-label>
+		<textarea 
+			[(ngModel)]="message" 
+			formControlName="message"
+			placeholder="Ingrese el mensaje a enviar" 
+			matInput></textarea>
+			@if(myForm.get('message')?.errors && myForm.get('message')?.dirty){
+		
+			@if(myForm.get('message')?.hasError('required')){
+			<mat-error>Mensaje es requerido</mat-error>
+			}
+			@if(myForm.get('message')?.hasError('minlength')){
+			<mat-error>El mensaje es muy corto</mat-error>
+			}
+		
+		}
+	</mat-form-field>
+	
+	</mat-card-content>
+	<mat-card-actions align="end">
+		<button (click)="clean()" mat-flat-button  type="button">
+			<mat-icon>clear</mat-icon>			
+			Limpiar
+		</button>	
+
+		<button 
+			type="submit" 
+			[disabled]="myForm.invalid"
+			mat-flat-button>
+			<mat-icon>send</mat-icon>
+      Enviar
+		</button>
+
+		
+	</mat-card-actions>
+</mat-card>
+</form>

@@ -1,0 +1,17 @@
+a > span {
+	vertical-align: super;
+	padding-left: 10px;
+}
+mat-drawer {
+	align-content: center;
+	width: auto;
+	border-color: #bbc4fe;
+	border-style: solid;
+	border-width: 1px;
+}
+mat-drawer-container {
+	min-height: 200px;
+}
+mat-drawer-content {
+	padding-left : 20px;
+}

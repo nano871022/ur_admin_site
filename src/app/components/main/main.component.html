@@ -1,0 +1,37 @@
+<mat-drawer-container >
+	<mat-drawer mode="side" opened>
+		<mat-list>
+			<mat-list-item>
+					<a routerLink="home" >
+						<mat-icon>home</mat-icon>
+						<span>Inicio</span>
+					</a>
+				</mat-list-item>
+
+			<mat-list-item>
+			
+					<a routerLink="messages" >
+						<mat-icon>message</mat-icon>
+						<span>Mensajes</span>
+					</a>
+				</mat-list-item>
+			<mat-list-item>
+					<a routerLink="shared_folder" >
+						<mat-icon>folder</mat-icon>
+						<span>Carpetas Compartidas</span>
+					</a>
+				</mat-list-item>
+				<mat-list-item>
+					<a routerLink="links" >
+						<mat-icon>description</mat-icon>
+						<span>Formularios PQR</span>
+					</a>
+				</mat-list-item>
+			</mat-list>
+	</mat-drawer>
+	<mat-drawer-content>
+			<router-outlet ></router-outlet>
+	</mat-drawer-content>
+</mat-drawer-container>
+
+

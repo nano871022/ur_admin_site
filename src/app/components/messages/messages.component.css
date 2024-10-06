@@ -23,6 +23,20 @@ nav > a {
 	padding-left: 5px;
 	vertical-align: super;
 }
-.tittle{
+.title{
 	margin-bottom: 15px;
+}
+mat-card{
+	margin: 15px;
+}
+mat-card-header{
+	border-bottom: 1px solid #eee;
+	padding-bottom: 8px;
+	margin-bottom: 20px;
+}
+mat-card-title{
+	text-align: center;
+}
+button{
+	margin-right: 20px;
 }

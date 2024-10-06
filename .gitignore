@@ -8,6 +8,7 @@
 
 # Node
 /node_modules
+**/mode_modules/**
 npm-debug.log
 yarn-error.log
 
@@ -45,3 +46,27 @@ Thumbs.db
 /.firebase
 .firebase
 .firebase/
+*.log
+/*.log
+/*-*.log
+*.log
+ui-debug.log
+versions
+/versions
+/versions/
+versions/
+/*.log
+/ui-debug.log
+ui-debug.log
+/src/enviroments/
+src/enviroments/
+/src/enviroments
+/.vscode/
+.vscode/
+/.vscode
+/.firebase/
+.firebase/
+/.firebase
+/run.sh
+/ur_admin_site.sublime-project
+/package-lock.json
