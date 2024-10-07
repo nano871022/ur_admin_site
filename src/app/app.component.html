@@ -1,19 +1,20 @@
-
-<div class="body">
+  <header>
     <mat-toolbar>
       <img src="logo.png" title="logo app" height="30px" />
       <span>Torres San Sebastian APP</span>
       <span class="spacer"></span>
       <app-authentication></app-authentication>
     </mat-toolbar>
-    <div>
+  </header>
+  <main>
       @if(!isLogged){
        <span>Bienvenido a la página de administración de Torres San Sebastian APP</span>
-      }
+        
+      }@else{
         <router-outlet />
-    </div>
-    <div class="footer">
+      }
+    </main>
+    <footer >
         Torres San Sebastian (TSS) App Since 2021 
-    </div>
-  </div>
+    </footer>
 

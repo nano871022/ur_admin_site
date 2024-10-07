@@ -5,6 +5,7 @@ import { environment } from '@src/environments/environment';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
+import { GetTokenService } from '@services/tokens/get-token.service';
 
 @Component({
   standalone: true,
@@ -18,7 +19,7 @@ export class AuthenticationComponent {
   isLogged = false;
   private credential : any;
   
-  constructor(private auth: AngularFireAuth,private router: Router) {
+  constructor(private auth: AngularFireAuth,private router: Router, private getTokeSvc:GetTokenService) {
     this.validateLogged();
   }
 
@@ -26,28 +27,37 @@ export class AuthenticationComponent {
     this.auth.signOut().then(()=>{;
       this.email = null;
       this.isLogged = false;
-      this.router.navigate(['/']);
+      this.getTokeSvc.unAuthenticate();
+      this.router.navigateByUrl(this.router.url);
     });
   }
 
   async validateLogged(){
     this.auth.onAuthStateChanged((user)=>{
       if(user !== null){
-        this.isLogged = true;
-        this.email = user.email;
-        this.router.navigate(['/main']);
+        this.getTokeSvc.getToken(user?.email?? '' ,user?.uid ?? '').then((token)=>{
+          this.isLogged = true;
+          this.email = user.email;
+          this.router.navigate(['/main']);  
+        }).catch((error)=>{
+          this.logOut();
+        })
       }
     });
   }
 
   async logIn(){
     var credential = await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-    this.isLogged = true;
-    this.credential = credential;
     if(credential !== null && credential.user !== null){
-      this.email = credential.user.email;
+      var user = credential.user
+      this.getTokeSvc.getToken(user?.email?? '' ,user?.uid ?? '').then((token)=>{
+          this.isLogged = true;
+          this.email = user.email;
+          this.credential = credential;
+          this.router.navigate(['/main']);  
+        }).catch((error)=>{
+          this.logOut();
+        })
     }
-    this.router.navigate(['/main']);
   }
-
 }

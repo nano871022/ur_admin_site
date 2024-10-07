@@ -20,7 +20,7 @@ export const routes: Routes = [
 		{ path: 'links', component: LinksComponent , canActivate: [authGuard]},
 
  	]},
- 	{ path: '/'    , component: AppComponent },
+ 	{ path: ''    , component: AppComponent },
  	{ path: '', redirectTo: '/', pathMatch: 'full' },
  
 ];

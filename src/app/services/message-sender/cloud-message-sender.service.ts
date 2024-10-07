@@ -29,18 +29,17 @@ export class CloudMessageSenderService {
                                     notifications: notification, 
                                     to : "allUsers"
                                   };
-    console.log("url: ",environment.firebaseConfig.messager.messageUrl);
-    console.log("headers: ",headers);
-    return this.http.post<any>(environment.firebaseConfig.messager.messageUrl, request, { headers: headers });
+    return this.http.post<any>(environment.backend.host+":"+environment.backend.port+environment.backend.messager, request, { headers: headers });
+  }
+
+  unAuthenticate(){
+    this.tokenSvc.unAuthenticate();
   }
 
   requestPermission(): any{
-    console.log("== requestPermission");
-   this.tokenSvc.getToken().subscribe({next: token => {
-     this.token = (token as any).token;
-   },
-   error: err => { console.log("===ERROR: "+err); return err ; }
-   })
+      this.tokenSvc.getToken('','').then(token => {
+        this.token = token;
+      }).catch(error  => this.tokenSvc.unAuthenticate());
   } 
 
 

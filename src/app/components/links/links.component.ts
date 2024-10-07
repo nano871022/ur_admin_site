@@ -34,6 +34,7 @@ export class LinksComponent {
         this.waitBillingSpinner = false
       }, (error) => {
         this.waitBillingSpinner = false
+        this.dataService.unAuthenticate();
         this.billingUrl = 'Error al obtener información del servidor, por favor reintente mas tarde.';
       });
         
@@ -46,6 +47,7 @@ export class LinksComponent {
         this.waitGeneralSpinner = false
       }, (error) => {
         this.waitGeneralSpinner = false
+        this.dataService.unAuthenticate();
         this.generalUrl = 'Error al obtener información del servidor, por favor reintente mas tarde.';
       });
         

@@ -28,17 +28,16 @@ export class DataService {
       'Application':'ur-admin-site'
     });
     
-    console.log("url: ",environment.firebaseConfig.data.url);
-    console.log("headers: ",headers);
-    return this.http.get<any>(environment.firebaseConfig.data.url+'/'+tokenName, { headers: headers }); 
+    return this.http.get<any>(environment.backend.host+":"+environment.backend.port+environment.backend.data+'/'+tokenName, { headers: headers }); 
+  }
+
+  unAuthenticate(){
+    this.tokenSvc.unAuthenticate();
   }
 
   requestPermission(): any{
-    console.log("== requestPermission");
-   this.tokenSvc.getToken().subscribe({next: token => {
-     this.token = (token as any).token;
-   },
-   error: err => { console.log("===ERROR: "+err); return err ; }
-   })
+      this.tokenSvc.getToken('','').then(token => {
+         this.token = token;
+      }).catch(err => this.tokenSvc.unAuthenticate());
   } 
 }

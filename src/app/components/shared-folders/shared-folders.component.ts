@@ -31,6 +31,7 @@ export class SharedFoldersComponent {
         this.waitImageSpinner = false
     }, err => {
       this.waitImageSpinner = false
+      this.dataService.unAuthenticate();
       this.imagesFolder = 'Error al obtener información del servidor, por favor reintente más tarde'
     });
       
@@ -41,6 +42,7 @@ export class SharedFoldersComponent {
         this.waitFolderSpinner = false
     }, err => {
       this.waitFolderSpinner = false
+      this.dataService.unAuthenticate();
       this.filesFolder = 'Error al obtener información del servidor, por favor reintente más tarde'
     });
       
