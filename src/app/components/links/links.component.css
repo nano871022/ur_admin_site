@@ -12,6 +12,9 @@ mat-card {
 mat-card-content > span{
 	font-size: 13px;
 }
+mat-card-content{
+	overflow: hidden;
+}
 mat-card-header{
 	border-bottom: 1px solid #eee;
 	padding-bottom: 5px;

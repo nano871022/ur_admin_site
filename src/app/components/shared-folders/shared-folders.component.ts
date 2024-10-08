@@ -25,24 +25,22 @@ export class SharedFoldersComponent {
   constructor(private dataService: DataService ){
     this.waitImageSpinner = true;
     this.waitFolderSpinner = true;
-    this.dataService.getData('folder_docs').subscribe( data => {
+    this.dataService.getData('folder_docs').then( data => {
       this.imagesFolder = (data as ResponseDefault).value;
       if(this.imagesFolder != 'not found images folder') this.hasImagesFolder = true
         this.waitImageSpinner = false
     }, err => {
       this.waitImageSpinner = false
-      this.dataService.unAuthenticate();
       this.imagesFolder = 'Error al obtener información del servidor, por favor reintente más tarde'
     });
       
     
-    this.dataService.getData('folder_img').subscribe( data => {
+    this.dataService.getData('folder_img').then( data => {
       this.filesFolder = (data as ResponseDefault).value;
       if(this.filesFolder != 'not found files folder') this.hasFilesFolder = true
         this.waitFolderSpinner = false
     }, err => {
       this.waitFolderSpinner = false
-      this.dataService.unAuthenticate();
       this.filesFolder = 'Error al obtener información del servidor, por favor reintente más tarde'
     });
       

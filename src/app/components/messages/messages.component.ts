@@ -44,18 +44,11 @@ export class MessagesComponent implements OnInit {
   onSubmit():void{
     try{
     this.waiting = true;
-    this.senderSvc.requestPermission();
-    if(this.senderSvc.token == null){
-      this.waiting = false;
-      this.result = "No se pudo obtener el token";
-      this.openSnackBar(this.result, "Cerrar");
-      return;
-    }
     const notification :Notification = {
                                           title :this.title, 
                                           body: this.message
                                         };
-    this.senderSvc.send(notification).subscribe( data => {
+    this.senderSvc.send(notification).then( data => {
       this.waiting = false;
       this.result = (data as any).description;
       this.openSnackBar(this.result, "Cerrar");

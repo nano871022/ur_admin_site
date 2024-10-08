@@ -1,6 +1,6 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, Provider } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
@@ -16,6 +16,7 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { HttpClientService } from '@services/interceptor/http-client-service.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,10 +26,12 @@ export const appConfig: ApplicationConfig = {
     , provideFirebaseApp(() => initializeApp(environment.firebaseConfig))
     , provideFirestore(() => getFirestore())
     , provideAuth(() => getAuth())
-    , provideHttpClient(withFetch())
     , provideMessaging(() => getMessaging())
+    , provideHttpClient(withFetch())
     , {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}
-    , CloudMessageSenderService, provideAnimationsAsync()
-    , DataService, provideAnimationsAsync()
+    , provideAnimationsAsync()
+    , CloudMessageSenderService 
+    , DataService
+    , HttpClientService
     ]
 };

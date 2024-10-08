@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Notification, Notifications } from '@app/model/notification.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@src/environments/environment';
-import { Observable } from 'rxjs';
 import { getMessaging } from "firebase/messaging";
-import { GetTokenService } from "@services/tokens/get-token.service";
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
+import { HttpClientService } from '@services/interceptor/http-client-service.service';
 
 
 @Injectable({
@@ -13,31 +11,21 @@ import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 })
 export class DataService {
 
-   token:string | null = null;
+   values : Map<string, string> = new Map<string, string>();
    
-  constructor(private http:HttpClient, private tokenSvc:GetTokenService) { 
-    this.requestPermission();
-  }
+  constructor(private http:HttpClientService) { }
 
 
-  getData(tokenName: string):Observable<any>{
-     const headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.token,
-      'Application':'ur-admin-site'
+  getData(tokenName: string):Promise<any>{
+    if(this.values.get(tokenName) != null && this.values.get(tokenName) != undefined){
+      return Promise.resolve(this.values.get(tokenName));
+    }
+
+    return this.http.fetchAuth(environment.backend.host+":"+environment.backend.port+environment.backend.data+'/'+tokenName)
+    .then(response => response.json())
+    .then(data => {
+       this.values.set(tokenName, data);   
+       return data;
     });
-    
-    return this.http.get<any>(environment.backend.host+":"+environment.backend.port+environment.backend.data+'/'+tokenName, { headers: headers }); 
   }
-
-  unAuthenticate(){
-    this.tokenSvc.unAuthenticate();
-  }
-
-  requestPermission(): any{
-      this.tokenSvc.getToken('','').then(token => {
-         this.token = token;
-      }).catch(err => this.tokenSvc.unAuthenticate());
-  } 
 }
