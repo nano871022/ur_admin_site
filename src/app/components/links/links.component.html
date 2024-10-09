@@ -4,6 +4,9 @@
 		<mat-card-header>
 			<mat-card-title>
 				<span>PQR Facturación</span> 
+				<button type="button" (click)="billingPqrRefresh()" mat-mini-fab > 
+					<mat-icon>refresh</mat-icon>
+				</button>
 			</mat-card-title>
 		</mat-card-header>
 		<mat-card-content>
@@ -27,7 +30,11 @@
 		<mat-card-header>
 			<mat-card-title>
 				<span>PQR General </span>
+				<button type="button" (click)="generalPqrRefresh()" mat-mini-fab >
+					<mat-icon>refresh</mat-icon>
+				</button>
 			</mat-card-title> 
+
 		</mat-card-header>
 		<mat-card-content>
 			<span>{{generalUrl}}</span>

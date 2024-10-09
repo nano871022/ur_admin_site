@@ -6,13 +6,17 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 export class HttpClientService {
 
   private cache = new Map<string, {response:Response, timestamp:number}>();
-  private CACHE_EXPIRATION_TIME = 5 * 60 * 1000; // 5 minutes
+  private CACHE_EXPIRATION_TIME = environment.timerCacheMins * 60 * 1000; // 10 minutes
 
   constructor(private auth: AngularFireAuth) { }
 
-  public async fetchAuth(input: RequestInfo, init?: RequestInit): Promise<Response> {
+  public async fetchAuth(input: RequestInfo, init?: RequestInit,refresh:boolean = false): Promise<Response> {
 
     var authToken = JSON.parse(atob(localStorage.getItem('authToken')!));
+
+    if( typeof input === 'string'  && input.startsWith('/api/') ) {
+      input = `${environment.backend.host}:${environment.backend.port}${input}`;
+    }
       
     const modifiedInit: RequestInit = {
       method: init?.method ?? 'GET',
@@ -29,9 +33,8 @@ export class HttpClientService {
     const now = Date.now();
     const cacheEntry = this.cache.get(cacheKey);
 
-    if(cacheEntry && now - cacheEntry.timestamp < this.CACHE_EXPIRATION_TIME) {
-      console.log("measure: "+(now - cacheEntry.timestamp))
-      return Promise.resolve(cacheEntry.response);
+    if(cacheEntry && now - cacheEntry.timestamp < this.CACHE_EXPIRATION_TIME && !refresh) {
+      return Promise.resolve(cacheEntry.response.clone());
     }
 
    return fetch(input, modifiedInit).then(async (response: Response) => {; 
@@ -53,16 +56,28 @@ export class HttpClientService {
   }
 
   public async fetchBasic(input: RequestInfo, init?: RequestInit): Promise<Response> {
+     if( typeof input === 'string'  && input.startsWith('/api/') ) {
+      input = `${environment.backend.host}:${environment.backend.port}${input}`;
+    }
      const modifiedInit: RequestInit = {
       method: init?.method ?? 'GET',
       headers: {
-        'host':`${environment.backend.host}:${environment.backend.port}`,
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
         'Application':'ur-admin-site'
       },
       body: init?.body
     };
-    return fetch(input, modifiedInit);
+    return fetch(input, modifiedInit)
+    .then(async (response: Response) => {
+      if(response.status === 401) {
+         return this.auth.signOut().then(()=>{;
+                  window.location.href = '/';  
+                  return Promise.reject("Unauthorized: Redirecting to login");
+              });
+         return response;
+      }
+      return response;
+    });
   }
 }

@@ -26,19 +26,14 @@ export class LinksComponent {
   constructor(public dataService: DataService) {
     this.waitBillingSpinner = true;
     this.waitGeneralSpinner = true;
-      dataService.getData('url_pqr_billing').then((data: ResponseDefault) => {
-        this.billingUrl = data.value;
-        if(data.value.length > 0){ 
-          this.hasBillingUrl = true
-        }
-        this.waitBillingSpinner = false
-      }, (error) => {
-        this.waitBillingSpinner = false
-        this.billingUrl = 'Error al obtener información del servidor, por favor reintente mas tarde.';
-      });
-        
       
-      dataService.getData('url_pqr_general').then((data: ResponseDefault) => {
+    this.generalPqrRefresh(false);  
+
+    this.billingPqrRefresh(false);
+   }
+
+   generalPqrRefresh(refresh: boolean = true){
+      this.dataService.getData('url_pqr_general',refresh).then((data: ResponseDefault) => {
         this.generalUrl = data.value;
         if(data.value.length > 0){ 
           this.hasGeneralUrl = true
@@ -48,8 +43,19 @@ export class LinksComponent {
         this.waitGeneralSpinner = false
         this.generalUrl = 'Error al obtener información del servidor, por favor reintente mas tarde.';
       });
-        
-      
+   }
+
+   billingPqrRefresh(refresh: boolean = true){
+      this.dataService.getData('url_pqr_billing',refresh).then((data: ResponseDefault) => {
+        this.billingUrl = data.value;
+        if(data.value.length > 0){ 
+          this.hasBillingUrl = true
+        }
+        this.waitBillingSpinner = false
+      }, (error) => {
+        this.waitBillingSpinner = false
+        this.billingUrl = 'Error al obtener información del servidor, por favor reintente mas tarde.';
+      });
    }
 
 }

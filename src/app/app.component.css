@@ -6,7 +6,10 @@ main > p {
 	flex: 1 1 auto;
 }
 header > mat-toolbar {
-	background: #bbc4fe;;
+	background: #bbc4fe;
+	height: fit-content;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 body{
 	align-items: normal;

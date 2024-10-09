@@ -1,9 +1,29 @@
 .login{
 	width: fit-content;
 }
-.login > span{
+.login > div > span{
 	text-align: center;
 	font-size: small ;
 	margin-right: 10px;
 	vertical-align: super;
+}
+.login > div {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.login > div:last-child {
+  margin-top: 10px;
+}
+
+.remainder{
+	font-size: small;
+}
+.remainer_close{
+	font-size: small;
+	color: #ff9800;
+}
+.remainder_end{
+	font-size: small;
+	color: #f44336;
 }

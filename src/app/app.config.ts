@@ -17,6 +17,7 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HttpClientService } from '@services/interceptor/http-client-service.service';
+import { CommonModule } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,5 +34,6 @@ export const appConfig: ApplicationConfig = {
     , CloudMessageSenderService 
     , DataService
     , HttpClientService
+    , { provide: CommonModule}
     ]
 };

@@ -4,7 +4,11 @@
 		<mat-card-header>
 			<mat-card-title>
 				<span>Carpeta Compartida Imagenes</span> 
+				<button type="button" (click)="imagesSharedRefresh()" mat-mini-fab >
+					<mat-icon>refresh</mat-icon>
+				</button>
 			</mat-card-title>
+
 		</mat-card-header>
 		<mat-card-content>
 			<span>{{imagesFolder}}</span>
@@ -27,6 +31,9 @@
 		<mat-card-header>
 			<mat-card-title>
 				<span>Carpeta Compartida archivos </span>
+				<button type="button" (click)="filesSharedRefresh()" mat-mini-fab >
+					<mat-icon>refresh</mat-icon>
+				</button>
 			</mat-card-title> 
 		</mat-card-header>
 		<mat-card-content>

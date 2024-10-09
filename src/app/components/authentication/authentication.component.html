@@ -7,9 +7,9 @@
 				<mat-icon>logout</mat-icon>
 			</button>
 		</div>
-		<div>
-			<span>{{remainder}}</span>
-			<button mat-mini-fab (click)="renew()" >
+		<div [ngClass]="{'remainder': clockState==='normal', 'remainder_close': clockState === 'close', 'remainder_end': clockState === 'end'}">
+			<span >{{remainder}}</span>
+			<button mat-mini-fab (click)="renew()" [disabled]="isEnableToGetRenewToken">
 				<mat-icon>autorenew</mat-icon>
 			</button>
 		</div>

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@src/environments/environment';
 import { User } from '@app/model/user.model';
 import { HttpClientService } from '@services/interceptor/http-client-service.service';
+import { Login } from '@app/model/login.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,15 @@ export class GetTokenService {
         uid = userObj.user.uid;
       }
     }
-   return this.http.fetchBasic(environment.backend.host+":"+environment.backend.port+environment.backend.token+"?user="+user+"&uid="+uid)
+    const body : Login = {
+     email: user,
+     uid: uid 
+    };
+
+   return this.http.fetchBasic(`${environment.backend.token}`,{
+    method: 'POST',
+    body: JSON.stringify(body)
+   })
       .then((response:Response) => response.json())
       .then((data:any) => {
         userObj = {"email": user, "uid": uid, "token": data.token} as User;

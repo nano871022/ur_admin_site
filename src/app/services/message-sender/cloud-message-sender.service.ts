@@ -21,7 +21,7 @@ export class CloudMessageSenderService {
                                     to : "allUsers"
                                   };
     
-    return this.http.fetchAuth(environment.backend.host+":"+environment.backend.port+environment.backend.messager, {
+    return this.http.fetchAuth(`${environment.backend.messager}`, {
       method: 'POST',
       body: JSON.stringify(request)
     }).then(response => response.json())

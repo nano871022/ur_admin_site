@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, NgModule } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { environment } from '@src/environments/environment';
@@ -6,18 +6,22 @@ import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { GetTokenService } from '@services/tokens/get-token.service';
+import { timer } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-authentication',
   templateUrl: './authentication.component.html',
   styleUrls: ['./authentication.component.css'],
-  imports:[MatButtonModule,MatIconModule]
+  imports:[MatButtonModule,MatIconModule,CommonModule]
 })
 export class AuthenticationComponent implements OnInit{
   email : String | null = null;
   remainder : string | null = null;
   isLogged = false;
+  isEnableToGetRenewToken = true;
+  clockState : string = 'normal';
   private credential : any;
   private date : Date | null = null;
   private intervalId:any
@@ -35,8 +39,8 @@ export class AuthenticationComponent implements OnInit{
   }
 
   renew():void{
-    this.getToken(this.credential.user.email ?? '',this.credential.user?.uid ?? '').then((token)=>{ 
-       this.isLogged = true;
+    this.getToken(this.credential?.user?.email ?? '',this.credential?.user?.uid ?? '').then((token)=>{ 
+       this.isLogged = true;  
     }).catch((error)=>{
           this.logOut();
         });
@@ -68,22 +72,46 @@ export class AuthenticationComponent implements OnInit{
           this.email = email;
           this.router.navigate(['/main']);  
           this.date = new Date();
+          this.task();
         }).catch((error)=>{
           this.logOut();
         })
     }
 
     ngOnInit(){
-        this.intervalId = setInterval(()=>{
-          if(this.date !== null && this.isLogged){
-            this.remainder = ((new Date().getTime() - this.date.getTime())/1000).toString();
-            console.log("Remainder: " + this.remainder);
-          }   
-        },1000);
+      this.task();
+     
     }
 
-    ngOnDestroy(){
-      clearInterval(this.intervalId);  
+    createDelay(delay: number) {
+      return timer(delay);
+    }
+
+    task(){
+      this.createDelay(1000)
+      .subscribe(() => {
+        if(this.isLogged){
+          const nano = ((new Date().getTime() - (this.date?.getTime()?? 0))/1000);
+          const minutes = Math.floor(nano / 60);
+          const seconds = Math.floor(nano % 60);
+
+          if( minutes < environment.timerLoginMins - 4){
+            this.isEnableToGetRenewToken = true;
+            this.clockState = 'normal';
+          } else if( minutes < environment.timerLoginMins - 2){
+            this.isEnableToGetRenewToken = false;
+            this.clockState = 'close';
+          } else if( minutes < environment.timerLoginMins){
+            this.isEnableToGetRenewToken = false;
+            this.clockState = 'end';
+          }else{
+            this.isEnableToGetRenewToken = true;
+            this.logOut();
+          }
+          this.remainder = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+          this.task();
+          }
+      });
     }
 
 }
