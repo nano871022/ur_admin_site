@@ -11,6 +11,11 @@
 
 		</mat-card-header>
 		<mat-card-content>
+			<p>
+			A través del siguiente enlace, tiene la oportunidad de cargar imágenes que se visualizarán en la ventana principal de la aplicación, permitiendo a los usuarios acceder a ellas de manera sencilla. Es importante destacar que el orden en que las imágenes se presentan está influenciado por el nombre con el que se cargan; por lo tanto, le sugerimos que tenga en cuenta esta consideración al nombrar sus archivos.
+
+Adicionalmente, algunas imágenes se encuentran preestablecidas en la aplicación. Si desea realizar modificaciones en estas imágenes predeterminadas, le solicitamos que se comunique con el administrador para obtener asistencia.
+</p>
 			<span>{{imagesFolder}}</span>
 			@if (waitImageSpinner) {
 				<mat-spinner></mat-spinner>	
@@ -37,6 +42,9 @@
 			</mat-card-title> 
 		</mat-card-header>
 		<mat-card-content>
+			<p>
+			A través del siguiente enlace, tiene la posibilidad de cargar archivos que serán posteriormente exhibidos en la sección de archivos de la aplicación. Esta funcionalidad permitirá a los usuarios acceder a los documentos cargados, ofreciéndoles la opción de descargarlos o visualizarlos directamente desde la plataforma.
+			</p>
 			<span>{{filesFolder}}</span>
 			@if (waitFolderSpinner) {
 				<mat-spinner></mat-spinner>	
