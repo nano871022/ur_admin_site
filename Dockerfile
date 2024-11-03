@@ -32,7 +32,7 @@ if $1 == "dev" ; then\n\
 else\n\
  ng build --base-href /browser/ \n\ 
 fi\n\
-if ! $(command -v firebase &> /dev/null); then\n\cd 
+if ! $(command -v firebase &> /dev/null); then\n\
    echo "=== load emulator firebase"\n\ 
    npm install -g firebase-tools\n\ 
 fi\n\
