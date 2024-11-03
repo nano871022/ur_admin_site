@@ -16,25 +16,43 @@ RUN echo '#!/bin/bash \n\
 nvm_version_target="v20.13.1"\n\
 cd code \n\
 current_nvm_version="$(. ~/.nvm/nvm.sh && nvm current)"\n\
-if [ "$current_nvm_version" == "$nvm_version_target"]\n\
- then\n\
+if [ "$current_nvm_version" != "$nvm_version_target" ] ; then\n\
 echo "=== Install mvn and setting"\n\
 . ~/.nvm/nvm.sh && nvm install 20.13.1 && nvm alias default 20.13.1 &&  nvm use default\n\
+else \n\
+ echo "use version"\n\
+ - ~/.nvm/nvm.sh && nvm use 20.13.1\n\
 fi\n\
-if $(command -v npm &> /dev/null) ; then\n\
- echo "=== settings npm and angular ng"\n\ 
- npm install -g npm\n\ 
- npm install -g @angular/cli && ng version\n\ 
+echo "$(command nvm --version &> /dev/null)"\n\
+if [ "$(command npm -v  &> /dev/null)" != "" ] ; then\n\
+ echo "=== npm installed $(command -v &> /dev/null)"\n\
+else \n\
+ echo "=== settings npm and angular ng"\n\
+ node install -g npm\n\
 fi\n\
-echo "=== compile"\n\ 
-if $1 == "dev" ; then\n\
- ng build --base-href /browser/ --configuration=development \n\ 
+if [ "$(command -v ng &> /dev/null)" != "" ] ; then\n\
+ echo "=== Installed angular/cli"\n\
 else\n\
- ng build --base-href /browser/ \n\ 
+ echo "=== Installing angular/cli"\n\
+ npm install -g @angular/cli && ng version\n\
 fi\n\
-if ! $(command -v firebase &> /dev/null); then\n\
-   echo "=== load emulator firebase"\n\ 
-   npm install -g firebase-tools\n\ 
+echo "=== compile"\n\
+if  $(command ls node_modules &> /dev/null) ; then\n\
+ echo "=== install modules"\n\
+ npm install\n\
+fi \n\
+if [ "$1" != "dev" ] ; then\n\
+  echo "=== compile production"\n\
+ ng build --base-href /browser/ \n\
+else\n\
+ echo "=== compile development"\n\
+ ng build --base-href /browser/ --configuration=development\n\
+fi\n\
+if [ "$(command firebase -v  &> /dev/null)" != "not found" ] ; then\n\
+ echo "=== firebase installed"\n\
+else \n\
+   echo "=== load emulator firebase"\n\
+   npm install -g firebase-tools\n\
 fi\n\
 firebase emulators:start > ../logs/ur_app_manage_frontend.log 2>&1 &' > run.sh 
-CMD ["sh","run.sh"]
+CMD ["sh","run.sh","dev"]

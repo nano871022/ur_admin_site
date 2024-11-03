@@ -6,7 +6,7 @@ main > p {
 	flex: 1 1 auto;
 }
 header > mat-toolbar {
-	background: #bbc4fe;
+	background: {{ environment.firebaseConfig.projectId == 'torressansebastian' ? #bbc4fe : #26A269 }};
 	height: fit-content;
 	padding-top: 10px;
 	padding-bottom: 10px;
