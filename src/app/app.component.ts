@@ -6,6 +6,7 @@ import { AuthenticationComponent } from '@components/authentication/authenticati
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { environment } from '@src/environments/environment';
 
 @Component({
   selector: 'app-root',
