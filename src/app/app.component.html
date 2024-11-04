@@ -1,20 +1,20 @@
   <header>
     <mat-toolbar>
       <img src="logo.png" title="logo app" height="30px" />
-      <span>Torres San Sebastian APP</span>
+      <span>Alameda 181 APP</span>
       <span class="spacer"></span>
       <app-authentication></app-authentication>
     </mat-toolbar>
   </header>
   <main>
       @if(!isLogged){
-       <span>Bienvenido a la página de administración de Torres San Sebastian APP</span>
+       <span>Bienvenido a la página de administración de Alameda 181 APP</span>
         
       }@else{
         <router-outlet />
       }
     </main>
     <footer >
-        Torres San Sebastian (TSS) App Since 2021 - 2024
+        Alameda 181 App Since 2024
     </footer>
 
