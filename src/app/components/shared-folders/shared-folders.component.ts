@@ -17,18 +17,24 @@ export class SharedFoldersComponent {
 
   imagesFolder: string = 'not found images folder';
   filesFolder: string = 'not found files folder';
+  emailUserDrive: string = 'not found email user drive';
   hasImagesFolder: boolean = false
   hasFilesFolder: boolean = false
+  hasEmailUserDrive: boolean = false
   waitImageSpinner: boolean = false
   waitFolderSpinner: boolean = false
+  waitEmailUserDriveSpinner: boolean = false
 
   constructor(private dataService: DataService ){
     this.waitImageSpinner = true;
     this.waitFolderSpinner = true;
+    this.waitEmailUserDriveSpinner = true;
       
     this.filesSharedRefresh(false);
 
     this.imagesSharedRefresh(false);
+
+    this.emailUserDrive(false);
   }
 
   filesSharedRefresh(refresh: boolean = true){
@@ -52,5 +58,20 @@ export class SharedFoldersComponent {
       this.filesFolder = 'Error al obtener información del servidor, por favor reintente más tarde'
     });
   }
+
+  emailUserDrive(refresh: boolean = true){
+      this.dataService.getData('email_user_drive',refresh).then((data: ResponseDefault) => { 
+        this.emailUserDrive = data.value;
+        if(data.value.length > 0){
+         this.hasEmailUserDrive = true 
+        }
+        this.waitEmailUserDriveSpinner = false
+      }, (error) => {
+        this.waitEmailUserDriveSpinner = false
+        this.emailUserDrive = 'Error al obtener información del servidor, por favor reintente mas tarde.';
+      });
+        
+      
+   }
 
 }
