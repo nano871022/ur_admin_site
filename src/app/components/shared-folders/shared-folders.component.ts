@@ -66,7 +66,7 @@ export class SharedFoldersComponent {
          this.hasEmailUserDrive = true 
         }
         this.waitEmailUserDriveSpinner = false
-      }, (error) => {
+      }, err  => {
         this.waitEmailUserDriveSpinner = false
         this.emailUserDrive = 'Error al obtener información del servidor, por favor reintente mas tarde.';
       });
