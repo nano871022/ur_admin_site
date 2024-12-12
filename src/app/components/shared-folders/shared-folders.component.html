@@ -20,13 +20,13 @@ Adicionalmente, algunas imágenes se encuentran preestablecidas en la aplicació
 			@if (waitImageSpinner) {
 				<mat-spinner></mat-spinner>	
 			}
-			<br/>
+			<br/><br/>
 			@if (hasEmailUserDrive ) { 
-				<span>Agrega este correo con acceso de lectura y escritura: {{emailUserDrive}}</span>
+				<span>Agrega este correo con acceso de lectura y escritura: <br/> <b>{{emailUserDrive}}</b></span>
 			}
 			@if (waitEmailUserDriveSpinner) {
 				<mat-spinner></mat-spinner>	
-			}
+			}<br/>
 		</mat-card-content>
 		<mat-card-actions align="end">
 			@if (hasImagesFolder ) { 
@@ -56,9 +56,9 @@ Adicionalmente, algunas imágenes se encuentran preestablecidas en la aplicació
 			@if (waitFolderSpinner) {
 				<mat-spinner></mat-spinner>	
 			}
-			<br/>
+			<br/><br/>
 			@if (hasEmailUserDrive ) { 
-				<span>Agrega este correo con acceso de lectura y escritura: {{emailUserDrive}}</span>
+				<span>Agrega este correo con acceso de lectura y escritura: <br/><b>{{emailUserDrive}}</b></span>
 			}
 			@if (waitEmailUserDriveSpinner) {
 				<mat-spinner></mat-spinner>	
