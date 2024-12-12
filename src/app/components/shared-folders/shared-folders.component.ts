@@ -34,7 +34,7 @@ export class SharedFoldersComponent {
 
     this.imagesSharedRefresh(false);
 
-    this.emailUserDrive(false);
+    this.emailUserDriveRefresh(false);
   }
 
   filesSharedRefresh(refresh: boolean = true){
@@ -59,7 +59,7 @@ export class SharedFoldersComponent {
     });
   }
 
-  emailUserDrive(refresh: boolean = true){
+  emailUserDriveRefresh(refresh: boolean = true){
       this.dataService.getData('email_user_drive',refresh).then((data: ResponseDefault) => { 
         this.emailUserDrive = data.value;
         if(data.value.length > 0){
