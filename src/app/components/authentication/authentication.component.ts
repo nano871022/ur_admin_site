@@ -63,6 +63,8 @@ export class AuthenticationComponent implements OnInit{
       this.getToken(user?.email?? '' ,user?.uid ?? '').then((token)=>{;
         this.credential = credential;
       });
+    }else{
+      console.log("it cant log in with google ${credential}");
     }
   }
 

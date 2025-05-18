@@ -1,5 +1,6 @@
 <h2>Enlaces</h2>
 <div class="container responsive-grid">
+	@if(showBillingCard){
 	<mat-card appearance="outlined">
 		<mat-card-header>
 			<mat-card-title>
@@ -33,10 +34,12 @@ Si necesita asistencia adicional o tiene alguna consulta, no dude en ponerse en 
 			}
 		</mat-card-actions>
 	</mat-card>
+}
+@if(showGeneralCard){
 	<mat-card appearance="outlined">
 		<mat-card-header>
 			<mat-card-title>
-				<span>PQR General </span>
+				<span>PQR General</span>
 				<button type="button" (click)="generalPqrRefresh()" mat-mini-fab >
 					<mat-icon>refresh</mat-icon>
 				</button>
@@ -68,4 +71,83 @@ Si requiere asistencia adicional o tiene alguna pregunta, no dude en ponerse en 
 			}
 		</mat-card-actions>
 	</mat-card>
+}
+@if(showSuggestionBoxCard){
+	
+
+	<mat-card appearance="outlined"  >
+		<mat-card-header>
+			<mat-card-title>
+				<span>Buzon Sugerencias </span>
+				<button type="button" (click)="suggestionBoxRefresh()" mat-mini-fab >
+					<mat-icon>refresh</mat-icon>
+				</button>
+			</mat-card-title> 
+
+		</mat-card-header>
+		<mat-card-content>
+			<p>
+				En el siguiente enlace se ha configurado un formulario para la presentación de Buzon de Sugerencias, lo que permitirá a los usuarios cargar sus sugerencias de forma sencilla y accesible.
+
+Para utilizar esta funcionalidad, es necesario que usted elabore el formulario correspondiente. Una vez completado, deberá comunicar al administrador el enlace del formulario para que este pueda ser incorporado en la aplicación.
+
+Si requiere asistencia adicional o tiene alguna pregunta, no dude en ponerse en contacto.
+			</p>
+			<span>{{suggestionBoxUrl}}</span>
+			@if (waitGeneralSpinner) {
+				<mat-spinner></mat-spinner>	
+			}
+			
+		</mat-card-content>
+		<mat-card-actions align="end">
+			@if (hasSuggestionBoxUrl ) { 
+				<a href="{{suggestionBoxUrl}}"
+					target="_blank"
+					mat-stroked-button> 
+					<mat-icon>description</mat-icon>
+					ir 
+				</a> 
+			}
+		</mat-card-actions>
+	</mat-card>
+}
+@if(showFAQAICard){
+	
+
+	<mat-card appearance="outlined">
+		<mat-card-header>
+			<mat-card-title>
+				<span>FAQ - Preguntas Frecuentes by Gemini </span>
+				<button type="button" (click)="faqAIRefresh()" mat-mini-fab >
+					<mat-icon>refresh</mat-icon>
+				</button>
+			</mat-card-title> 
+
+		</mat-card-header>
+		<mat-card-content>
+			<p>
+				En el siguiente enlace se ha configurado un enlace para ver la pagina de Gemini Chat Gem, chat interactivo con Inteligencia Artificial el cual tiene cargado los documentos de Manual Convivencia, Reglamento y Acta Samblea 2025 para la copropiedad U.R. Torres San Sebastian.
+
+Para utilizar esta funcionalidad, es necesario que usted elabore el GEM en gemini correspondiente. Una vez completado, deberá comunicar al administrador el enlace del GEM para que este pueda ser incorporado en la aplicación.
+
+Si requiere asistencia adicional o tiene alguna pregunta, no dude en ponerse en contacto.
+			</p>
+			<span>{{FAQAIUrl}}</span>
+			@if (waitFAQAISpinner) {
+				<mat-spinner></mat-spinner>	
+			}
+			
+		</mat-card-content>
+		<mat-card-actions align="end">
+			@if (hasFAQAIUrl ) { 
+				<a href="{{FAQAIUrl}}"
+					target="_blank"
+					mat-stroked-button> 
+					<mat-icon>description</mat-icon>
+					ir 
+				</a> 
+			}
+		</mat-card-actions>
+	</mat-card>
+}
 </div>

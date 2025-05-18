@@ -18,18 +18,35 @@ export class LinksComponent {
 
   billingUrl: string = 'not found PQR Billing form';
   generalUrl: string = 'not found PQR general form';
+  suggestionBoxUrl: string = 'not found PQR general form';
+  PQRAUUrl: string = 'not found PQR general form';
+  FAQAIUrl: string = 'not found PQR general form';
   hasBillingUrl: boolean = false
   hasGeneralUrl: boolean = false
+  hasSuggestionBoxUrl: boolean = false
+  hasFAQAIUrl: boolean = false
   waitBillingSpinner: boolean = false
   waitGeneralSpinner: boolean = false
+  waitSuggestionBoxSpinner: boolean = false
+  waitFAQAISpinner: boolean = false
+  showBillingCard: Boolean = false
+  showGeneralCard: Boolean = false
+  showSuggestionBoxCard: Boolean = true
+  showFAQAICard: Boolean = false
 
   constructor(public dataService: DataService) {
     this.waitBillingSpinner = true;
     this.waitGeneralSpinner = true;
+    this.waitSuggestionBoxSpinner = true;
+    this.waitFAQAISpinner = true;
       
     this.generalPqrRefresh(false);  
 
     this.billingPqrRefresh(false);
+
+    this.suggestionBoxRefresh(false);
+
+    this.faqAIRefresh(false);
    }
 
    generalPqrRefresh(refresh: boolean = true){
@@ -55,6 +72,32 @@ export class LinksComponent {
       }, (error) => {
         this.waitBillingSpinner = false
         this.billingUrl = 'Error al obtener información del servidor, por favor reintente mas tarde.';
+      });
+   }
+
+    suggestionBoxRefresh(refresh: boolean = true){
+      this.dataService.getData('url_suggestion_box',refresh).then((data: ResponseDefault) => {
+        this.suggestionBoxUrl = data.value;
+        if(data.value.length > 0){ 
+          this.hasSuggestionBoxUrl = true
+        }
+        this.waitSuggestionBoxSpinner = false
+      }, (error) => {
+        this.waitSuggestionBoxSpinner = false
+        this.suggestionBoxUrl = 'Error al obtener información del servidor, por favor reintente mas tarde.';
+      });
+   }
+
+     faqAIRefresh(refresh: boolean = true){
+      this.dataService.getData('url_faq_ai',refresh).then((data: ResponseDefault) => {
+        this.FAQAIUrl = data.value;
+        if(data.value.length > 0){ 
+          this.hasFAQAIUrl = true
+        }
+        this.waitFAQAISpinner = false
+      }, (error) => {
+        this.waitFAQAISpinner = false
+        this.FAQAIUrl = 'Error al obtener información del servidor, por favor reintente mas tarde.';
       });
    }
 
