@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+      - feature/manage_auto_deploy
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -17,4 +18,4 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TORRESSANSEBASTIAN }}
           channelId: live
-          projectId: torressansebastian
+          projectId: ${{ secrets.PROJECT_GCP_FIREBASE }}
