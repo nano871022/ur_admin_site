@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+      - feature/manage_auto_deploy
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
