@@ -23,6 +23,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PROJECT_NAME: ${{ github.event.inputs.project || (github.ref == 'refs/heads/alameda181' && 'alameda181' || 'torressansebastian') }}
+    permissions:
+      contents: read
+      deployments: write
+      
     steps:
       - uses: actions/checkout@v4
 
