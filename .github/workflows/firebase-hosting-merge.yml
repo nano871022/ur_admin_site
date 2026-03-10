@@ -6,15 +6,53 @@ on:
   push:
     branches:
       - main
+      - alameda181
+  workflow_dispatch:
+    inputs:
+      project:
+        description: 'Select project to deploy'
+        required: true
+        default: 'torressansebastian'
+        type: choice
+        options:
+          - torressansebastian
+          - alameda181
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    env:
+      PROJECT_NAME: ${{ github.event.inputs.project || (github.ref == 'refs/heads/alameda181' && 'alameda181' || 'torressansebastian') }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Checkout properties repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/japl-properties
+          token: ${{ secrets.PROPERTIES_REPO_TOKEN }}
+          path: properties-repo
+          ref: ${{ env.PROJECT_NAME }}
+
+      - name: Copy environment file
+        run: cp properties-repo/ur-admin-site/environments/environment.ts src/environments/environment.ts
+
       - run: npm ci && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+
+      - name: Deploy to Torres San Sebastian
+        if: env.PROJECT_NAME == 'torressansebastian'
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TORRESSANSEBASTIAN }}
           channelId: live
           projectId: torressansebastian
+
+      - name: Deploy to Alameda 181
+        if: env.PROJECT_NAME == 'alameda181'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ALAMEDA181 }}
+          channelId: live
+          projectId: alameda181-something # TODO: Replace with actual project ID if known

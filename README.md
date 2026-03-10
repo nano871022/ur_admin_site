@@ -14,6 +14,24 @@ we need set two links folder to project
 > ln ../folder/enviroments/on/properties/private/project/environments.ts 
 > ln ../folder/enviroments/on/properties/private/project/environments.development.ts 
 
+### CI/CD Deployment with GitHub Actions
+
+The project uses GitHub Actions for automated deployment to Firebase Hosting. The workflow supports multiple projects: **Torres San Sebastian** and **Alameda 181**.
+
+#### Required GitHub Secrets
+To enable the deployment workflow, the following secrets must be configured in the repository:
+- `PROPERTIES_REPO_TOKEN`: A GitHub Personal Access Token (PAT) with access to the private `japl-properties` repository.
+- `FIREBASE_SERVICE_ACCOUNT_TORRESSANSEBASTIAN`: The Firebase Service Account key (JSON) for the Torres San Sebastian project.
+- `FIREBASE_SERVICE_ACCOUNT_ALAMEDA181`: The Firebase Service Account key (JSON) for the Alameda 181 project.
+
+#### Deployment Flow
+1. **Manual Trigger**: You can manually trigger the "Deploy to Firebase Hosting on merge" workflow from the "Actions" tab. Select the target project (`torressansebastian` or `alameda181`).
+2. **Automatic Trigger**:
+   - Pushes to the `main` branch will automatically deploy to **Torres San Sebastian**.
+   - Pushes to the `alameda181` branch will automatically deploy to **Alameda 181**.
+
+The workflow automatically fetches the project-specific `environment.ts` from the `japl-properties` repository before building and deploying.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
