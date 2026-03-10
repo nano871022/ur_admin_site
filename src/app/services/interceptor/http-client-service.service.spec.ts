@@ -1,13 +1,24 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientService } from './http-client-service.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { of } from 'rxjs';
 
-import { HttpClientServiceService } from './http-client-service.service';
-
-describe('HttpClientServiceService', () => {
-  let service: HttpClientServiceService;
+describe('HttpClientService', () => {
+  let service: HttpClientService;
+  let mockAngularFireAuth: any;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(HttpClientServiceService);
+    mockAngularFireAuth = {
+      signOut: jasmine.createSpy('signOut').and.returnValue(Promise.resolve())
+    };
+
+    TestBed.configureTestingModule({
+      providers: [
+        HttpClientService,
+        { provide: AngularFireAuth, useValue: mockAngularFireAuth }
+      ]
+    });
+    service = TestBed.inject(HttpClientService);
   });
 
   it('should be created', () => {

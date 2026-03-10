@@ -1,0 +1,45 @@
+name: Reusable Build
+
+on:
+  workflow_call:
+    secrets:
+      PROPERTIES_REPO_TOKEN:
+        required: true
+    outputs:
+      version:
+        description: "The version from package.json"
+        value: ${{ jobs.build.outputs.version }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout properties repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/japl-properties
+          token: ${{ secrets.PROPERTIES_REPO_TOKEN }}
+          path: properties-repo
+
+      - name: Copy environment file
+        run: cp properties-repo/ur-admin-site/environments/environment.ts src/environments/environment.ts
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Get version
+        id: get_version
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: dist/ur_admin_site
