@@ -36,7 +36,6 @@ jobs:
           repository: ${{ github.repository_owner }}/japl-properties
           token: ${{ secrets.PROPERTIES_REPO_TOKEN }}
           path: properties-repo
-          ref: ${{ env.PROJECT_NAME }}
 
       - name: Copy environment file
         run: cp properties-repo/ur-admin-site/environments/environment.ts src/environments/environment.ts
