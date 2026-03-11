@@ -3,7 +3,7 @@
     "rules": "database.rules.json"
   },
   "hosting": {
-    "public": "dist/ur_admin_site",
+    "public": "dist/ur_admin_site/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
