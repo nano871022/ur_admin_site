@@ -23,7 +23,7 @@ export class AppComponent {
   main_message = 'Bienvenido a la página de administración de ${name} APP';
   isLogged: boolean = false
 
-  constructor(private angularFireAuth:AngularFireAuth) {
+  constructor(private angularFireAuth:AngularFireAuth,private titleService: Title) {
     this.getAuth()
   }
 
