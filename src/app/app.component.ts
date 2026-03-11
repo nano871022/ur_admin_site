@@ -16,6 +16,7 @@ import { environment } from '@src/environments/environment';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  name = 'U.R. Torres San Sebastian (TSS)'
   title = 'Administración Unidad Residencial Torres San Sebastian TSS';
   main_message = 'Bienvenido a la página de administración de Torres San Sebastian APP';
   isLogged: boolean = false
