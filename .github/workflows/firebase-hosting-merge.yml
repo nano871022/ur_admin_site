@@ -32,8 +32,7 @@ jobs:
     needs: setup
     uses: ./.github/workflows/reusable-build.yml
     with:
-      environment: ${{ needs.setup.outputs.env_name }}
-      path_env: ${{ vars.PATH_ENV }}
+      environment: ${{ github.event.inputs.environment }}
     secrets:
       PROPERTIES_REPO_TOKEN: ${{ secrets.PROPERTIES_REPO_TOKEN }}
 
@@ -41,8 +40,7 @@ jobs:
     needs: [setup, build]
     uses: ./.github/workflows/reusable-deploy.yml
     with:
-      environment: ${{ needs.setup.outputs.env_name }}
-      project_name: ${{ vars.PROJECT_NAME }}
+      environment: ${{ github.event.inputs.environment }}
     secrets:
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
