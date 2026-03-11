@@ -41,7 +41,7 @@ jobs:
           mv "japl-properties/$ENV_PATH" src/environments/environment.ts
           rm -rf japl-properties
           pwd
-          ls src
+          ls src/environments
 
       - name: Install dependencies
         run: npm install
