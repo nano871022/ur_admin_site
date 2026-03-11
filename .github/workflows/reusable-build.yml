@@ -2,6 +2,10 @@ name: Reusable Build
 
 on:
   workflow_call:
+    inputs:
+      path_env:
+        required: true
+        type: string
     secrets:
       PROPERTIES_REPO_TOKEN:
         required: true
@@ -26,7 +30,7 @@ jobs:
           path: properties-repo
 
       - name: Copy environment file
-        run: cp properties-repo/ur-admin-site/environments/environment.ts src/environments/environment.ts
+        run: cp properties-repo/${{ inputs.path_env }} src/environments/environment.ts
 
       - name: Install dependencies
         run: npm install

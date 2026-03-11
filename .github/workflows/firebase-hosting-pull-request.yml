@@ -8,14 +8,34 @@ permissions:
   contents: read
   pull-requests: write
 jobs:
-  build_and_preview:
+  setup:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    outputs:
+      env_name: ${{ steps.set_env.outputs.env_name }}
+    steps:
+      - id: set_env
+        run: |
+          ENV_NAME="${{ github.base_ref == 'alameda181' && 'Alameda181' || 'TorresSanSebastian' }}"
+          echo "env_name=$ENV_NAME" >> $GITHUB_OUTPUT
+
+  build_and_preview:
+    needs: setup
+    environment: ${{ needs.setup.outputs.env_name }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout properties repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/japl-properties
+          token: ${{ secrets.PROPERTIES_REPO_TOKEN }}
+          path: properties-repo
+      - name: Copy environment file
+        run: cp properties-repo/${{ vars.PATH_ENV }} src/environments/environment.ts
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TORRESSANSEBASTIAN }}
-          projectId: torressansebastian
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: ${{ vars.PROJECT_NAME }}
