@@ -3,9 +3,6 @@ name: Reusable Build
 on:
   workflow_call:
     inputs:
-      path_env:
-        required: true
-        type: string
       environment:
          required: true
          type: string
