@@ -3,7 +3,7 @@ name: Reusable Tag
 on:
   workflow_call:
     inputs:
-      version:
+      environment:
         required: true
         type: string
 
@@ -14,11 +14,14 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+         fetch-depth: 0
 
       - name: Create and push tag
         run: |
+          VERSION="v1.0.${{ github.run_number }}-${{ inputs.environment }}"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-          TAG_NAME="v${{ inputs.version }}-${{ github.run_number }}"
+          TAG_NAME="v$VERSION-${{ github.run_number }}"
           git tag $TAG_NAME
           git push origin $TAG_NAME
