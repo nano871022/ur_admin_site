@@ -16,9 +16,10 @@ import { environment } from '@src/environments/environment';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  since_yearly = '2021 - 2025'
   name = 'U.R. Torres San Sebastian (TSS)'
-  title = 'Administración Unidad Residencial Torres San Sebastian TSS';
-  main_message = 'Bienvenido a la página de administración de Torres San Sebastian APP';
+  title = 'Administración ${name}';
+  main_message = 'Bienvenido a la página de administración de ${name} APP';
   isLogged: boolean = false
 
   constructor(private angularFireAuth:AngularFireAuth) {
