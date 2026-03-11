@@ -19,8 +19,8 @@ import { environment } from '@src/environments/environment';
 export class AppComponent {
   since_yearly = '2021 - 2025'
   name = environment.projectName;
-  title = `Administración ${name}`;
-  main_message = `Bienvenido a la página de administración de ${name} APP`;
+  title = `Administración ${environment.projectName}`;
+  main_message = `Bienvenido a la página de administración de ${environment.projectName} APP`;
   isLogged: boolean = false
 
   constructor(private angularFireAuth:AngularFireAuth,private titleService: Title) {
