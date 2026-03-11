@@ -6,6 +6,9 @@ on:
       path_env:
         required: true
         type: string
+       environment:
+         required: true
+         type: string
     secrets:
       PROPERTIES_REPO_TOKEN:
         required: true
