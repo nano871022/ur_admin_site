@@ -20,8 +20,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     outputs:
       version: ${{ steps.get_version.outputs.version }}
+      
     steps:
       - uses: actions/checkout@v4
 
@@ -32,12 +34,12 @@ jobs:
           token: ${{ secrets.PROPERTIES_REPO_TOKEN }}
           path: japl-properties
           sparse-checkout: |
-            ${{ inputs.path_env }}
+            ${{ vars.PATH_ENV }}
           sparse-checkout-cone-mode: false
           
       - name: Copy environment file
         run: |
-          ENV_PATH=$(echo "${{ inputs.path_env }}" | sed 's|^\./||')
+          ENV_PATH=$(echo "${{ vars.PATH_ENV }}" | sed 's|^\./||')
           echo $ENV_PATH
           mv "japl-properties/$ENV_PATH" src/environments/environment.ts
           pwd
