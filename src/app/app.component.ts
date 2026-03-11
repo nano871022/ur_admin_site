@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -6,6 +6,7 @@ import { AuthenticationComponent } from '@components/authentication/authenticati
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { Title } from '@angular/platform-browser'
 import { environment } from '@src/environments/environment';
 
 @Component({
@@ -26,6 +27,10 @@ export class AppComponent {
     this.title = 'Administración ${name}';
     this.main_message = 'Bienvenido a la página de administración de ${name} APP';
     this.getAuth()
+  }
+
+  ngOnInit(){
+    this.titleService.setTitle(name);
   }
 
   async getAuth(){
