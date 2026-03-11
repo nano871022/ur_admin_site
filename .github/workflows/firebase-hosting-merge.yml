@@ -12,41 +12,40 @@ on:
       project:
         description: 'Select project to deploy'
         required: true
-        default: 'torressansebastian'
+        default: 'TorresSanSebastian'
         type: choice
         options:
-          - torressansebastian
-          - alameda181
+          - TorresSanSebastian
+          - Alameda181
 
 jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
-      project_name: ${{ steps.set_project.outputs.project_name }}
-      project_id: ${{ steps.set_project.outputs.project_id }}
+      env_name: ${{ steps.set_project.outputs.env_name }}
     steps:
       - id: set_project
         run: |
-          PROJECT_NAME="${{ github.event.inputs.project || (github.ref == 'refs/heads/alameda181' && 'alameda181' || 'torressansebastian') }}"
-          echo "project_name=$PROJECT_NAME" >> $GITHUB_OUTPUT
-          if [ "$PROJECT_NAME" == "alameda181" ]; then
-            echo "project_id=cralameda181" >> $GITHUB_OUTPUT
-          else
-            echo "project_id=torressansebastian" >> $GITHUB_OUTPUT
-          fi
+          ENV_NAME="${{ github.event.inputs.project || (github.ref == 'refs/heads/alameda181' && 'Alameda181' || 'TorresSanSebastian') }}"
+          echo "env_name=$ENV_NAME" >> $GITHUB_OUTPUT
 
   build:
+    needs: setup
+    environment: ${{ needs.setup.outputs.env_name }}
     uses: ./.github/workflows/reusable-build.yml
+    with:
+      path_env: ${{ vars.PATH_ENV }}
     secrets:
       PROPERTIES_REPO_TOKEN: ${{ secrets.PROPERTIES_REPO_TOKEN }}
 
   deploy:
     needs: [setup, build]
+    environment: ${{ needs.setup.outputs.env_name }}
     uses: ./.github/workflows/reusable-deploy.yml
     with:
-      project_id: ${{ needs.setup.outputs.project_id }}
+      project_name: ${{ vars.PROJECT_NAME }}
     secrets:
-      FIREBASE_SERVICE_ACCOUNT: ${{ needs.setup.outputs.project_name == 'alameda181' && secrets.FIREBASE_SERVICE_ACCOUNT_ALAMEDA181 || secrets.FIREBASE_SERVICE_ACCOUNT_TORRESSANSEBASTIAN }}
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
   tag:
     needs: [build, deploy]

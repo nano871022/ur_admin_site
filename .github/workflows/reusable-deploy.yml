@@ -3,7 +3,7 @@ name: Reusable Deploy
 on:
   workflow_call:
     inputs:
-      project_id:
+      project_name:
         required: true
         type: string
     secrets:
@@ -28,4 +28,4 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           channelId: live
-          projectId: ${{ inputs.project_id }}
+          projectId: ${{ inputs.project_name }}
