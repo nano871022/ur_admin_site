@@ -17,7 +17,7 @@ import { environment } from '@src/environments/environment';
 })
 export class AppComponent {
   since_yearly = '2021 - 2025'
-  name = 'U.R. Torres San Sebastian (TSS)'
+  name = environment.projectName;
   title = 'Administración ${name}';
   main_message = 'Bienvenido a la página de administración de ${name} APP';
   isLogged: boolean = false
