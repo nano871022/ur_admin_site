@@ -21,7 +21,7 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
-      env_name: ${{ steps.set_project.outputs.env_name }}
+      env_name: ${{ github.event.inputs.environment }}
     steps:
       - id: set_project
         run: |
