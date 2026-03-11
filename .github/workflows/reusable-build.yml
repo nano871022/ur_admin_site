@@ -30,10 +30,16 @@ jobs:
         with:
           repository: ${{ github.repository_owner }}/japl-properties
           token: ${{ secrets.PROPERTIES_REPO_TOKEN }}
-          path: properties-repo
-
+          path: japl-properties
+          sparse-checkout: |
+            ${{ inputs.path_env }}
+          sparse-checkout-cone-mode: false
+          
       - name: Copy environment file
-        run: cp properties-repo/${{ inputs.path_env }} src/environments/environment.ts
+        run: |
+          ENV_PATH=$(echo "${{ inputs.path_env }}" | sed 's|^\./||')
+          mv "japl-properties/$ENV_PATH" src/environments/environment.ts
+          rm -rf japl-properties
 
       - name: Install dependencies
         run: npm install
