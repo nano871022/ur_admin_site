@@ -40,7 +40,7 @@ jobs:
           ENV_PATH=$(echo "${{ inputs.path_env }}" | sed 's|^\./||')
           mv "japl-properties/$ENV_PATH" src/environments/environment.ts
           pwd
-          ls ..
+          ls japl-properties
           rm -rf japl-properties
 
       - name: Install dependencies
