@@ -28,7 +28,7 @@ export class AppComponent {
   }
 
   ngOnInit(){
-    this.titleService.setTitle(name);
+    this.titleService.setTitle(this.name);
     this.title = 'Administración ${name}';
     this.main_message = 'Bienvenido a la página de administración de ${name} APP';
   }
