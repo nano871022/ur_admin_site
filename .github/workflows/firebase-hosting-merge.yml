@@ -30,7 +30,7 @@ jobs:
           PROJECT_NAME="${{ github.event.inputs.project || (github.ref == 'refs/heads/alameda181' && 'alameda181' || 'torressansebastian') }}"
           echo "project_name=$PROJECT_NAME" >> $GITHUB_OUTPUT
           if [ "$PROJECT_NAME" == "alameda181" ]; then
-            echo "project_id=alameda181-something" >> $GITHUB_OUTPUT
+            echo "project_id=cralameda181" >> $GITHUB_OUTPUT
           else
             echo "project_id=torressansebastian" >> $GITHUB_OUTPUT
           fi
