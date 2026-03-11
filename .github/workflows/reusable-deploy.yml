@@ -6,6 +6,9 @@ on:
       project_name:
         required: true
         type: string
+      environment:
+         required: true
+         type: string
     secrets:
       FIREBASE_SERVICE_ACCOUNT:
         required: true
