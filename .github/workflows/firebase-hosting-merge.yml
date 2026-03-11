@@ -8,7 +8,7 @@ on:
       - main
   workflow_dispatch:
     inputs:
-      project:
+      environment:
         description: 'Select project to deploy'
         required: true
         default: 'TorresSanSebastian'
