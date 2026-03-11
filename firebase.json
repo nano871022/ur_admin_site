@@ -10,16 +10,10 @@
       "**/node_modules/**"
     ],
     "rewrites": [
-      { 
-        "source": "/main",
-        "destination": "/browser/main/index.html"
-      },{
-        "source": "/",
-        "destination": "/browser/index.csr.html"
-      },
+  
       {
         "source": "**",
-        "destination": "/browser/index.html"
+        "destination": "/index.html"
       }
     
     ],
