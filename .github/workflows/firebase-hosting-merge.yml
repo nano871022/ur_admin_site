@@ -6,7 +6,6 @@ on:
   push:
     branches:
       - main
-      - alameda181
   workflow_dispatch:
     inputs:
       project:
@@ -26,23 +25,23 @@ jobs:
     steps:
       - id: set_project
         run: |
-          ENV_NAME="${{ github.event.inputs.project || (github.ref == 'refs/heads/alameda181' && 'Alameda181' || 'TorresSanSebastian') }}"
+          ENV_NAME="${{ github.event.inputs.project }}"
           echo "env_name=$ENV_NAME" >> $GITHUB_OUTPUT
 
   build:
     needs: setup
-    environment: ${{ needs.setup.outputs.env_name }}
     uses: ./.github/workflows/reusable-build.yml
     with:
+      environment: ${{ needs.setup.outputs.env_name }}
       path_env: ${{ vars.PATH_ENV }}
     secrets:
       PROPERTIES_REPO_TOKEN: ${{ secrets.PROPERTIES_REPO_TOKEN }}
 
   deploy:
     needs: [setup, build]
-    environment: ${{ needs.setup.outputs.env_name }}
     uses: ./.github/workflows/reusable-deploy.yml
     with:
+      environment: ${{ needs.setup.outputs.env_name }}
       project_name: ${{ vars.PROJECT_NAME }}
     secrets:
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
