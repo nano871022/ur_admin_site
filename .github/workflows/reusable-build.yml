@@ -6,7 +6,7 @@ on:
       path_env:
         required: true
         type: string
-       environment:
+      environment:
          required: true
          type: string
     secrets:
