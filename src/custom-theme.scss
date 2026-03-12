@@ -17,7 +17,7 @@ $config: map.get($client-themes, $active-client);
 $primary-color: map.get($config, 'primary');
 
 // Define the theme object.
-$my_app_primary: map.define-palette(mat.$indigo-palette, $primary-color);
+$my_app_primary: mat.define-palette(mat.$indigo-palette, $primary-color);
 $ur_admin_site-theme: mat.define-light-theme((
   color: (
     primary: $my_app_primary,
