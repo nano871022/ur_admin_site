@@ -61,7 +61,20 @@
                   "with": "src/environments/environment.development.ts"
                 }
               ]
-            }
+            },
+            "TorresSanSebastian":{
+               "assets": [
+                "src/clients/TorresSanSebastian/favicon.ico",
+                "src/clients/TorresSanSebastian/logo.png",
+                "src/assets"
+              ]
+            },
+	        "Alameda181":{
+		        "assets":[
+			        "src/clients/Alameda181/favicon.ico",
+			        "src/clients/Alameda181/logo.png",
+			        "src/assets"
+			       ]
           },
           "defaultConfiguration": "production"
         },
