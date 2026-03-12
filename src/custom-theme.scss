@@ -77,4 +77,3 @@ $ur_admin_site-theme: mat.m2-define-light-theme((
 
 // Comment out the line below if you want to use the deprecated `color` inputs.
 // @include mat.color-variants-backwards-compatibility($ur_admin_site-theme);
-@include mat.inject-css-variables($ur_admin_site-theme);
