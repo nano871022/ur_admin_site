@@ -19,7 +19,7 @@ $primary-color: map.get($config, 'primary');
 $ur_admin_site-theme: mat.define-theme((
   color: (
     theme-type: light,
-    primary: $primary_color,
+    primary: $primary-color,
     tertiary: mat.$blue-palette,
   ),
   density: (
