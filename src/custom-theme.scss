@@ -17,10 +17,10 @@ $config: map.get($client-themes, $active-client);
 $primary-color: map.get($config, 'primary');
 
 // Define the theme object.
-$ur_admin_site-theme: mat.define-theme((
+$my_app_primary: map.define-palette(mat.$indigo-palette, $primary-color);
+$ur_admin_site-theme: mat.define-light-theme((
   color: (
-    theme-type: light,
-    primary: $primary-color,
+    primary: $my_app_primary,
     tertiary: mat.$blue-palette,
   ),
   density: (
