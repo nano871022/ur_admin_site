@@ -1,7 +1,15 @@
 $client-themes: (
   'TorresSanSebastian':(
-    'primary': #bbc4fe
+    'primary': #bbc4fe,
+    'banner-bg': #bbc4fe,
+    'login-btn-bg': #3f51b5,
+    'button-bg': #ff4081,
+    'link-color': #3f51b5
   ),'Alameda181':(
-    'primary': #26a269
+    'primary': #26a269,
+    'banner-bg': #26a269,
+    'login-btn-bg': #1b5e20,
+    'button-bg': #c62828,
+    'link-color': #1b5e20
   )
 );
