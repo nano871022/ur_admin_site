@@ -67,30 +67,32 @@
                 }
               ]
             },
-            "TorresSanSebastian":{
-               "stylePreprocessorOptions": {
-                 "includePaths": [
-                   "src/styles/themes/TorresSanSebastian"
-                 ]
-               },
-               "assets": [
-                "src/clients/TorresSanSebastian/favicon.ico",
-                "src/clients/TorresSanSebastian/logo.png",
+            "TorresSanSebastian": {
+              "stylePreprocessorOptions": {
+                "includePaths": [
+                  "src/styles/themes/TorresSanSebastian"
+                ]
+              },
+              "assets": [
+                { "glob": "**/*", "input": "public" },
+                { "glob": "favicon.ico", "input": "src/clients/TorresSanSebastian", "output": "/" },
+                { "glob": "logo.png", "input": "src/clients/TorresSanSebastian", "output": "/" },
                 "src/assets"
               ]
             },
-	        "Alameda181":{
-               "stylePreprocessorOptions": {
-                 "includePaths": [
-                   "src/styles/themes/Alameda181"
-                 ]
-               },
-		        "assets":[
-			        "src/clients/Alameda181/favicon.ico",
-			        "src/clients/Alameda181/logo.png",
-			        "src/assets"
-			       ]
-           }
+            "Alameda181": {
+              "stylePreprocessorOptions": {
+                "includePaths": [
+                  "src/styles/themes/Alameda181"
+                ]
+              },
+              "assets": [
+                { "glob": "**/*", "input": "public" },
+                { "glob": "favicon.ico", "input": "src/clients/Alameda181", "output": "/" },
+                { "glob": "logo.png", "input": "src/clients/Alameda181", "output": "/" },
+                "src/assets"
+              ]
+            }
           },
           "defaultConfiguration": "production"
         },
