@@ -4,7 +4,7 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 @import 'styles/themes/client-configs';
-@import 'styles/current-client';
+@import 'current-client';
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -17,11 +17,43 @@ $config: map.get($client-themes, $active-client);
 $primary-color: map.get($config, 'primary');
 
 // Define the theme object.
-$my_app_primary: mat.define-palette(mat.$indigo-palette, $primary-color);
-$ur_admin_site-theme: mat.define-light-theme((
+$my_app_primary: mat.m2-define-palette((
+  50: lighten($primary-color, 40%),
+  100: lighten($primary-color, 30%),
+  200: lighten($primary-color, 20%),
+  300: lighten($primary-color, 10%),
+  400: lighten($primary-color, 5%),
+  500: $primary-color,
+  600: darken($primary-color, 5%),
+  700: darken($primary-color, 10%),
+  800: darken($primary-color, 20%),
+  900: darken($primary-color, 30%),
+  A100: lighten($primary-color, 35%),
+  A200: lighten($primary-color, 25%),
+  A400: lighten($primary-color, 15%),
+  A700: darken($primary-color, 15%),
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: rgba(black, 0.87),
+    A700: white,
+  )
+));
+
+$ur_admin_site-theme: mat.m2-define-light-theme((
   color: (
     primary: $my_app_primary,
-    tertiary: mat.$blue-palette,
+    accent: mat.m2-define-palette(mat.$m2-pink-palette),
   ),
   density: (
     scale: 0,
