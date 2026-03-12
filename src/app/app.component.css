@@ -6,7 +6,7 @@ main > p {
 	flex: 1 1 auto;
 }
 header > mat-toolbar {
-	background: var(mat-sys-background-banner);
+	background: var(--mat-sys-banner-background);
 	height: fit-content;
 	padding-top: 10px;
 	padding-bottom: 10px;

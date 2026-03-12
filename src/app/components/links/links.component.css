@@ -38,3 +38,12 @@ mat-card-title{
   justify-content: space-between;
   align-items: center;
 }
+
+mat-card-actions a[mat-stroked-button] {
+	color: var(--mat-sys-link-color);
+	border-color: var(--mat-sys-link-color);
+}
+
+mat-card-title button[mat-mini-fab] {
+	background-color: var(--mat-sys-generic-button-background);
+}

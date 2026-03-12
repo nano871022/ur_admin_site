@@ -27,3 +27,7 @@
 	font-size: small;
 	color: #f44336;
 }
+
+.login button[mat-fab] {
+	background-color: var(--mat-sys-login-button-background);
+}

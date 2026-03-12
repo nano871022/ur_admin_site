@@ -15,6 +15,10 @@
 $config: map.get($client-themes, $active-client);
 
 $primary-color: map.get($config, 'primary');
+$banner-bg: map.get($config, 'banner-bg');
+$login-btn-bg: map.get($config, 'login-btn-bg');
+$button-bg: map.get($config, 'button-bg');
+$link-color: map.get($config, 'link-color');
 
 // Define the theme object.
 $my_app_primary: mat.m2-define-palette((
@@ -66,9 +70,12 @@ $ur_admin_site-theme: mat.m2-define-light-theme((
 :root {
   @include mat.all-component-themes($ur_admin_site-theme);
 
-  --mat-primary-500: ${mat.m2-get-color-from-palette($my_app_primary,500)};
+  --mat-primary-500: #{mat.m2-get-color-from-palette($my_app_primary, 500)};
 
-  --mat-sys-background-banner: var(--mat-primary-500);
+  --mat-sys-banner-background: #{$banner-bg};
+  --mat-sys-login-button-background: #{$login-btn-bg};
+  --mat-sys-generic-button-background: #{$button-bg};
+  --mat-sys-link-color: #{$link-color};
 }
 
 // Comment out the line below if you want to use the pre-defined typography utility classes.
