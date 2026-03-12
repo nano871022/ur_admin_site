@@ -16,6 +16,6 @@ mat-drawer-content {
 	padding-left : 20px;
 }
 
-mat-list-item > a > mat-icon {
+mat-list-item > span > span > a > mat-icon {
   color: var(--mat-sys-link-color);
 }
