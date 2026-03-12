@@ -5,7 +5,7 @@ a > span {
 mat-drawer {
 	align-content: center;
 	width: auto;
-	border-color: #bbc4fe;
+	border-color: var(--mat-sys-link-color);
 	border-style: solid;
 	border-width: 1px;
 }
@@ -14,4 +14,8 @@ mat-drawer-container {
 }
 mat-drawer-content {
 	padding-left : 20px;
+}
+
+mat-icon {
+  color: var(--mat-sys-link-color);
 }
