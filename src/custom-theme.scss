@@ -2,6 +2,8 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
+@import 'styles/themes/client-configs';
+@import 'styles/current-client';
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -9,11 +11,15 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
+$config: map.get($client-themes, $active-client);
+
+$primary-color: map.get($config, 'primary');
+
 // Define the theme object.
 $ur_admin_site-theme: mat.define-theme((
   color: (
     theme-type: light,
-    primary: mat.$azure-palette,
+    primary: $primary_color,
     tertiary: mat.$blue-palette,
   ),
   density: (
