@@ -75,6 +75,7 @@
 			        "src/clients/Alameda181/logo.png",
 			        "src/assets"
 			       ]
+           }
           },
           "defaultConfiguration": "production"
         },
