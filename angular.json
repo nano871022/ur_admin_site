@@ -26,6 +26,11 @@
                 "input": "public",
               }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            },
             "styles": [
               "src/custom-theme.scss",
               "src/styles.css"
@@ -63,6 +68,11 @@
               ]
             },
             "TorresSanSebastian":{
+               "stylePreprocessorOptions": {
+                 "includePaths": [
+                   "src/styles/themes/TorresSanSebastian"
+                 ]
+               },
                "assets": [
                 "src/clients/TorresSanSebastian/favicon.ico",
                 "src/clients/TorresSanSebastian/logo.png",
@@ -70,6 +80,11 @@
               ]
             },
 	        "Alameda181":{
+               "stylePreprocessorOptions": {
+                 "includePaths": [
+                   "src/styles/themes/Alameda181"
+                 ]
+               },
 		        "assets":[
 			        "src/clients/Alameda181/favicon.ico",
 			        "src/clients/Alameda181/logo.png",
