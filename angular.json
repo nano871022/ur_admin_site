@@ -61,6 +61,16 @@
                   "with": "src/environments/environment.development.ts"
                 }
               ]
+            },
+            "TorresSanSebastian":{
+              "fileReplacements":[{
+                "replace": "src/environments/envionment.ts",
+                "wwith": "src/environments/environment.torressansebastian.ts"
+              }], "assets": [
+                "src/clients/TorresSanSebastian/favicon.ico",
+                "src/clients/TorresSanSebastian/logo.png",
+                "src/assets"
+              ]
             }
           },
           "defaultConfiguration": "production"
