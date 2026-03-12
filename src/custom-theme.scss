@@ -65,6 +65,10 @@ $ur_admin_site-theme: mat.m2-define-light-theme((
 // that you are using.
 :root {
   @include mat.all-component-themes($ur_admin_site-theme);
+
+  --mat-primary-500: ${mat.m2-get-color-from-palette($my_app_primary,500)};
+
+  --mat-sys-background-banner: var(--mat-primary-500);
 }
 
 // Comment out the line below if you want to use the pre-defined typography utility classes.
