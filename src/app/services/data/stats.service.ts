@@ -28,7 +28,7 @@ export class StatsService {
     return this.http.fetchAuth('/api/stats/active-users')
       .then(response => response.json())
       .then(data => {
-        const value = data.activeUsers;
+        const value = data.data.activeUsers;
         localStorage.setItem(this.CACHE_KEY, JSON.stringify({ value, timestamp: now }));
         return value;
       })
