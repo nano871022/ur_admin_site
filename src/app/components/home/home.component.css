@@ -1,0 +1,30 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.stats-card {
+    text-align: center;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--mat-primary-50, #f0f4ff); /* Fallback to a light blue if var is not set */
+    max-width: fit-content;
+}
+
+.stats-title {
+    color: #64748b; /* text-slate-500 */
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 500; /* font-medium */
+    text-transform: uppercase;
+    letter-spacing: 0.025em; /* tracking-tight-ish */
+    margin: 0;
+}
+
+.stats-value {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 800; /* font-extrabold */
+    color: var(--mat-primary-500, #3f51b5); /* text-brand (using primary color) */
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+}
