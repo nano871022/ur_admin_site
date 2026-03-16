@@ -13,7 +13,7 @@
 }
 
 .stats-title {
-    color: #64748b; /* text-slate-500 */
+    color: var(--mat-toolbar-container-text-color, var(--mat-app-on-surface)); /* text-slate-500 */
     font-size: 0.75rem; /* text-xs */
     font-weight: 500; /* font-medium */
     text-transform: uppercase;
@@ -27,4 +27,12 @@
     color: var(--mat-primary-500, #3f51b5); /* text-brand (using primary color) */
     margin-top: 0.25rem;
     margin-bottom: 0;
+}
+
+.stats-botom{
+    font-size: 0.5rem; /* text-2xl */
+    font-weight: 200; /* font-extrabold */
+    color: var(--mat-primary-500, #3f51b5); /* text-brand (using primary color) */
+    margin-bottom: 0.25rem;
+    margin-top: 0;
 }
