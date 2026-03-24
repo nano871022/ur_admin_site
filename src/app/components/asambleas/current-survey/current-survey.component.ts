@@ -48,11 +48,19 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
   async loadActiveSurvey(): Promise<void> {
     try {
       const surveys = await this.assemblyService.getAllSurveis();
+      // In this version we only take the first one as "active" or "recently closed"
       this.activeSurvey = surveys.length > 0 ? surveys[0] : null;
 
       if (this.activeSurvey && this.activeSurvey.createDate) {
         this.startTime = new Date(this.activeSurvey.createDate).getTime();
-        this.startTimer();
+        if (this.activeSurvey.status === 'OPEN') {
+          this.startTimer();
+        } else {
+          this.stopTimer();
+          if (this.activeSurvey.timeUsed) {
+            this.elapsedTime = this.activeSurvey.timeUsed.substring(0, 5); // Assuming HH:mm:ss format
+          }
+        }
       }
     } catch (error) {
       console.error('Error loading active survey:', error);
@@ -116,6 +124,7 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
     if (window.confirm('¿Está seguro de que desea cerrar la votación?')) {
       try {
         await this.assemblyService.closeVotes('active');
+        await this.loadData();
       } catch (error) {
         console.error('Error closing voting:', error);
       }
@@ -131,5 +140,10 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
         console.error('Error restarting survey:', error);
       }
     }
+  }
+
+  getOptionPercentage(votes: number): number {
+    if (this.receivedVotes === 0) return 0;
+    return Math.round((votes / this.receivedVotes) * 100);
   }
 }

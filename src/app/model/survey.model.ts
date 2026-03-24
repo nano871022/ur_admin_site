@@ -4,8 +4,10 @@ export interface Answer {
 }
 
 export interface Survey {
+  id?: string;
   question: string;
   options: Answer[];
-  timeUsed: string; // Representing Time as string (e.g., "HH:mm:ss") or adjust if needed.
+  timeUsed: string;
   createDate: Date;
+  status: 'OPEN' | 'CLOSED';
 }
