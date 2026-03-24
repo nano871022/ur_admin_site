@@ -1,0 +1,121 @@
+/* Tailwind CSS translations to standard CSS for the AddQuestionComponent */
+
+.fixed { position: fixed; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.z-50 { z-index: 50; }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.p-4 { padding: 1rem; }
+.bg-black\/40 { background-color: rgba(0, 0, 0, 0.4); }
+.backdrop-blur-sm { backdrop-filter: blur(4px); }
+
+.relative { position: relative; }
+.w-full { width: 100%; }
+.max-w-lg { max-width: 32rem; }
+.bg-white { background-color: #ffffff; }
+.rounded-2xl { border-radius: 1rem; }
+.shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+.overflow-hidden { overflow: hidden; }
+
+/* Simple animations */
+.animate-in {
+  animation: fadeIn 0.3s ease-out, zoomIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.95); }
+  to { transform: scale(1); }
+}
+
+.flex.justify-between { justify-content: space-between; }
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.border-b { border-bottom-width: 1px; }
+.border-gray-100 { border-color: #f3f4f6; }
+
+.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+.font-bold { font-weight: 700; }
+.text-gray-800 { color: #1f2937; }
+
+.text-gray-400 { color: #9ca3af; }
+.hover\:text-gray-600:hover { color: #4b5563; }
+.transition-colors { transition-property: background-color, border-color, color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+.p-2 { padding: 0.5rem; }
+.h-6 { height: 1.5rem; }
+.w-6 { width: 1.5rem; }
+
+.p-6 { padding: 1.5rem; }
+.space-y-6 > * + * { margin-top: 1.5rem; }
+.space-y-2 > * + * { margin-top: 0.5rem; }
+.space-y-4 > * + * { margin-top: 1rem; }
+
+.block { display: block; }
+.text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+.font-semibold { font-weight: 600; }
+.text-gray-700 { color: #374151; }
+
+.rounded-xl { border-radius: 0.75rem; }
+.border-gray-200 { border-color: #e5e7eb; }
+.focus\:border-blue-500:focus { border-color: #3b82f6; }
+.focus\:ring-blue-500:focus { --tw-ring-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); }
+.transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+.text-blue-600 { color: #2563eb; }
+.hover\:text-blue-700:hover { color: #1d4ed8; }
+
+.w-6 { width: 1.5rem; }
+.h-6 { height: 1.5rem; }
+.rounded-full { border-radius: 9999px; }
+.bg-blue-100 { background-color: #dbeafe; }
+
+.h-4 { height: 1rem; }
+.w-4 { width: 1rem; }
+
+.bg-gray-50 { background-color: #f9fafb; }
+.rounded-lg { border-radius: 0.5rem; }
+.border { border-width: 1px; }
+.flex-grow { flex-grow: 1; }
+
+.hover\:text-red-500:hover { color: #ef4444; }
+.opacity-0 { opacity: 0; }
+.group:hover .group-hover\:opacity-100 { opacity: 1; }
+
+.bg-gray-50 { background-color: #f9fafb; }
+.flex-row-reverse { flex-direction: row-reverse; }
+
+.py-2\.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+.bg-blue-600 { background-color: #2563eb; }
+.hover\:bg-blue-700:hover { background-color: #1d4ed8; }
+.text-white { color: #ffffff; }
+.shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+.shadow-blue-200 { --tw-shadow-color: #bfdbfe; box-shadow: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -2px var(--tw-shadow-color); }
+
+.hover\:bg-gray-100:hover { background-color: #f3f4f6; }
+.border-gray-200 { border-color: #e5e7eb; }
+
+.mr-auto { margin-right: auto; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.text-red-500 { color: #ef4444; }
+.hover\:text-red-600:hover { color: #dc2626; }
+.font-medium { font-weight: 500; }
+
+.italic { font-style: italic; }
+.text-gray-400 { color: #9ca3af; }
+
+.disabled\:bg-gray-400:disabled { background-color: #9ca3af; cursor: not-allowed; }
+
+/* Custom styles for input text in form array */
+input.bg-transparent {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+}
