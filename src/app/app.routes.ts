@@ -6,6 +6,7 @@ import { AuthenticationComponent } from '@components/authentication/authenticati
 import { MainComponent } from '@components/main/main.component';
 import { LinksComponent } from '@components/links/links.component';
 import { SharedFoldersComponent } from '@components/shared-folders/shared-folders.component';
+import { AssembliesComponent } from '@components/assemblies/assemblies.component';
 import { authGuard } from './auth.guard';
 import { AppComponent } from './app.component';
 
@@ -18,6 +19,7 @@ export const routes: Routes = [
 		{ path: 'messages', component: MessagesComponent , canActivate: [authGuard]},
 		{ path: 'shared_folder', component: SharedFoldersComponent , canActivate: [authGuard]},
 		{ path: 'links', component: LinksComponent , canActivate: [authGuard]},
+		{ path: 'assemblies', component: AssembliesComponent , canActivate: [authGuard]},
 
  	]},
  	{ path: ''    , component: AppComponent },
