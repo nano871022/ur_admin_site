@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Survey } from '@app/model/survey.model';
 
 describe('CurrentSurveyComponent', () => {
   let component: CurrentSurveyComponent;
@@ -12,7 +13,7 @@ describe('CurrentSurveyComponent', () => {
   let assemblyServiceSpy: jasmine.SpyObj<AssemblyService>;
 
   const fixedDate = new Date('2024-01-01T12:00:00Z');
-  const mockSurveys = [
+  const mockSurveys: Survey[] = [
     {
       question: '¿Aprueba el presupuesto?',
       options: [
@@ -20,7 +21,8 @@ describe('CurrentSurveyComponent', () => {
         { value: 'NO', votes: 5 }
       ],
       timeUsed: '00:00:00',
-      createDate: fixedDate
+      createDate: fixedDate,
+      status: 'OPEN'
     }
   ];
 
@@ -77,7 +79,7 @@ describe('CurrentSurveyComponent', () => {
     discardPeriodicTasks();
   }));
 
-  it('should update elapsed time', fakeAsync(() => {
+  it('should update elapsed time when OPEN', fakeAsync(() => {
     const now = fixedDate.getTime() + 65000; // 65 seconds after fixedDate
     jasmine.clock().install();
     jasmine.clock().mockDate(new Date(now));
@@ -95,14 +97,48 @@ describe('CurrentSurveyComponent', () => {
     discardPeriodicTasks();
   }));
 
-  it('should call closeVotes when closeVoting is confirmed', fakeAsync(() => {
+  it('should show results when status is CLOSED', fakeAsync(() => {
+    mockSurveys[0].status = 'CLOSED';
+    mockSurveys[0].timeUsed = '05:24:00';
+    assemblyServiceSpy.getAllSurveis.and.returnValue(Promise.resolve(JSON.parse(JSON.stringify(mockSurveys))));
+
+    fixture.detectChanges();
+    tick(); // Resolve getAllSurveis
+    tick(); // Resolve getVotes
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('.closed-badge')).toBeTruthy();
+    expect(compiled.querySelector('.live-badge')).toBeFalsy();
+    expect(compiled.querySelector('.results-visuals')).toBeTruthy();
+    expect(compiled.querySelector('.options-grid')).toBeFalsy();
+    expect(compiled.querySelector('.actions-section')).toBeFalsy();
+    expect(component.elapsedTime).toBe('05:24');
+
+    discardPeriodicTasks();
+  }));
+
+  it('should calculate option percentage correctly', () => {
+    component.receivedVotes = 100;
+    expect(component.getOptionPercentage(78)).toBe(78);
+    expect(component.getOptionPercentage(14)).toBe(14);
+    expect(component.getOptionPercentage(0)).toBe(0);
+
+    component.receivedVotes = 0;
+    expect(component.getOptionPercentage(10)).toBe(0);
+  });
+
+  it('should call closeVotes and reload data when closeVoting is confirmed', fakeAsync(() => {
     fixture.detectChanges();
     tick();
     tick();
-    const confirmSpy = spyOn(window, 'confirm').and.returnValue(true);
+    spyOn(window, 'confirm').and.returnValue(true);
     component.closeVoting();
-    tick();
+    tick(); // closeVotes
+    tick(); // reload loadActiveSurvey
+    tick(); // reload loadStats
     expect(assemblyServiceSpy.closeVotes).toHaveBeenCalledWith('active');
+    expect(assemblyServiceSpy.getAllSurveis).toHaveBeenCalledTimes(2);
     discardPeriodicTasks();
   }));
 
@@ -110,7 +146,7 @@ describe('CurrentSurveyComponent', () => {
     fixture.detectChanges();
     tick();
     tick();
-    const confirmSpy = spyOn(window, 'confirm').and.returnValue(false);
+    spyOn(window, 'confirm').and.returnValue(false);
     component.closeVoting();
     tick();
     expect(assemblyServiceSpy.closeVotes).not.toHaveBeenCalled();
@@ -122,7 +158,7 @@ describe('CurrentSurveyComponent', () => {
     tick(); // Init calls
     tick();
 
-    const confirmSpy = spyOn(window, 'confirm').and.returnValue(true);
+    spyOn(window, 'confirm').and.returnValue(true);
     component.restartSurvey();
     tick(); // restartSurvey call
     tick(); // loadActiveSurvey call

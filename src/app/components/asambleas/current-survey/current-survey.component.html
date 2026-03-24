@@ -1,12 +1,13 @@
 <section class="current-survey-container" data-purpose="current-survey-status" *ngIf="activeSurvey">
   <div class="survey-card">
-    <div class="survey-header">
+    <div class="survey-header" [class.closed-header]="activeSurvey.status === 'CLOSED'">
       <div class="header-content">
         <div>
-          <h2 class="header-title">Encuesta Activa</h2>
+          <h2 class="header-title">Encuesta {{ activeSurvey.status === 'CLOSED' ? 'Cerrada' : 'Activa' }}</h2>
           <p class="header-subtitle">Pregunta #1</p>
         </div>
-        <span class="live-badge">EN VIVO</span>
+        <span class="live-badge" *ngIf="activeSurvey.status === 'OPEN'">EN VIVO</span>
+        <span class="closed-badge" *ngIf="activeSurvey.status === 'CLOSED'">CERRADA</span>
       </div>
     </div>
     <div class="survey-body">
@@ -34,17 +35,40 @@
       <!-- Question text, Answers and Controls layout -->
       <div class="content-layout">
         <!-- Left Side: Question and Options -->
-        <div class="question-section">
+        <div class="question-section" [class.full-width]="activeSurvey.status === 'CLOSED'">
           <h3 class="question-text">{{ activeSurvey.question }}</h3>
-          <div class="options-grid">
+
+          <!-- Open Survey Options (Tags) -->
+          <div class="options-grid" *ngIf="activeSurvey.status === 'OPEN'">
             <button class="option-button" *ngFor="let option of activeSurvey.options">
               {{ option.value | uppercase }}
             </button>
           </div>
+
+          <!-- Closed Survey Options (Progress Bars) -->
+          <div class="results-visuals" *ngIf="activeSurvey.status === 'CLOSED'">
+            <div class="result-item" *ngFor="let option of activeSurvey.options; let i = index">
+              <div class="result-info">
+                <span class="option-label">{{ option.value | uppercase }}</span>
+                <div class="percentage-info">
+                  <span class="percentage-value" [class.primary-text]="i === 0">{{ getOptionPercentage(option.votes) }}%</span>
+                  <span class="votes-count">({{ option.votes }} votos)</span>
+                </div>
+              </div>
+              <div class="progress-container">
+                <div class="progress-bar"
+                     [class.bg-primary]="i === 0"
+                     [class.bg-gray-400]="i === 1"
+                     [class.bg-gray-300]="i > 1"
+                     [style.width.%]="getOptionPercentage(option.votes)">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Right Side: Action Controls -->
-        <div class="actions-section">
+        <!-- Right Side: Action Controls (Only when OPEN) -->
+        <div class="actions-section" *ngIf="activeSurvey.status === 'OPEN'">
           <button mat-raised-button color="primary" class="action-btn close-btn" (click)="closeVoting()">
             <mat-icon>stop</mat-icon>
             Cerrar Votación

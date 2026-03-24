@@ -18,6 +18,10 @@
   padding: 1.5rem;
 }
 
+.closed-header {
+  background-color: rgba(248, 250, 252, 0.5);
+}
+
 .header-content {
   display: flex;
   align-items: center;
@@ -46,6 +50,17 @@
   font-weight: 700;
   border-radius: 9999px;
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.closed-badge {
+  padding: 0.25rem 0.75rem;
+  background-color: #e2e8f0;
+  color: #475569;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
 }
 
 @keyframes pulse {
@@ -137,6 +152,10 @@
   flex: 1;
 }
 
+.full-width {
+  flex: 1 1 100%;
+}
+
 .question-text {
   font-size: 1.5rem;
   font-weight: 700;
@@ -184,6 +203,77 @@
   justify-content: center;
   gap: 0.5rem;
   height: 3rem;
+}
+
+/* Results Visuals (Progress Bars) */
+.results-visuals {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.result-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.result-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.option-label {
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: #1e293b;
+}
+
+.percentage-info {
+  text-align: right;
+}
+
+.percentage-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.primary-text {
+  color: var(--mat-primary-500);
+}
+
+.votes-count {
+  margin-left: 0.5rem;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.progress-container {
+  height: 1rem;
+  width: 100%;
+  background-color: #f1f5f9;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.6s ease-out;
+}
+
+.bg-primary {
+  background-color: var(--mat-primary-500);
+}
+
+.bg-gray-400 {
+  background-color: #94a3b8;
+}
+
+.bg-gray-300 {
+  background-color: #cbd5e1;
 }
 
 .no-survey {
