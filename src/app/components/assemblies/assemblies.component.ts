@@ -5,6 +5,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { AssemblyStats, Survey } from '@app/model/assembly.model';
+import { AddQuestionComponent } from '@components/asambleas/add-question/add-question.component';
+import { SurveyHistoryComponent } from '@components/asambleas/survey-history/survey-history.component';
+import { CurrentSurveyComponent } from '@components/asambleas/current-survey/current-survey.component';
 
 @Component({
   selector: 'app-assemblies',
@@ -14,7 +17,10 @@ import { AssemblyStats, Survey } from '@app/model/assembly.model';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    AddQuestionComponent,
+    SurveyHistoryComponent,
+    CurrentSurveyComponent
   ],
   templateUrl: './assemblies.component.html',
   styleUrls: ['./assemblies.component.css']
@@ -85,8 +91,13 @@ export class AssembliesComponent implements OnInit {
   }
 
   openCreateSurveyPopup(): void {
-    // Popup creation logic will be implemented in future steps/agents
-    console.log('Opening create survey popup...');
-    // Example: this.dialog.open(CreateSurveyComponent);
+    const dialogRef = this.dialog.open(AddQuestionComponent, {
+      width: '500px'
+    });
+
+    dialogRef.componentInstance.closed.subscribe(() => {
+      dialogRef.close();
+      this.loadSurveysHistory();
+    });
   }
 }
