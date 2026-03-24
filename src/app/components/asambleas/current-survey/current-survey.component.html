@@ -1,0 +1,68 @@
+<section class="current-survey-container" data-purpose="current-survey-status" *ngIf="activeSurvey">
+  <div class="survey-card">
+    <div class="survey-header">
+      <div class="header-content">
+        <div>
+          <h2 class="header-title">Encuesta Activa</h2>
+          <p class="header-subtitle">Pregunta #1</p>
+        </div>
+        <span class="live-badge">EN VIVO</span>
+      </div>
+    </div>
+    <div class="survey-body">
+      <!-- Horizontal Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card stat-default">
+          <p class="stat-label">Tiempo Transcurrido</p>
+          <p class="stat-value">{{ elapsedTime }}</p>
+          <p class="stat-unit">minutos</p>
+        </div>
+        <div class="stat-card stat-brand">
+          <p class="stat-label">Votos Recibidos</p>
+          <p class="stat-value">{{ receivedVotes }}</p>
+        </div>
+        <div class="stat-card stat-orange">
+          <p class="stat-label">Votos Faltantes</p>
+          <p class="stat-value">{{ missingVotes }}</p>
+        </div>
+        <div class="stat-card stat-emerald">
+          <p class="stat-label">Porcentaje Votación</p>
+          <p class="stat-value">{{ votingPercentage }}%</p>
+        </div>
+      </div>
+
+      <!-- Question text, Answers and Controls layout -->
+      <div class="content-layout">
+        <!-- Left Side: Question and Options -->
+        <div class="question-section">
+          <h3 class="question-text">{{ activeSurvey.question }}</h3>
+          <div class="options-grid">
+            <button class="option-button" *ngFor="let option of activeSurvey.options">
+              {{ option.value | uppercase }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Side: Action Controls -->
+        <div class="actions-section">
+          <button mat-raised-button color="primary" class="action-btn close-btn" (click)="closeVoting()">
+            <mat-icon>stop</mat-icon>
+            Cerrar Votación
+          </button>
+          <button mat-stroked-button class="action-btn restart-btn" (click)="restartSurvey()">
+            <mat-icon>refresh</mat-icon>
+            Reiniciar Encuesta
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div *ngIf="!activeSurvey" class="no-survey">
+  <mat-card class="no-survey-card">
+    <mat-card-content>
+      <p>No hay encuesta activa en este momento.</p>
+    </mat-card-content>
+  </mat-card>
+</div>
