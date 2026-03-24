@@ -1,0 +1,64 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" data-purpose="modal-overlay">
+  <!-- BEGIN: Add Question Modal -->
+  <div class="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300" data-purpose="modal-card">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100" data-purpose="modal-header">
+      <h2 class="text-xl font-bold text-gray-800">Agregar Nueva Pregunta</h2>
+      <!-- Close button (X) -->
+      <button (click)="cancel()" aria-label="Cerrar" class="text-gray-400 hover:text-gray-600 transition-colors p-2">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <form [formGroup]="questionForm" (ngSubmit)="save()">
+      <div class="p-6 space-y-6" data-purpose="modal-body">
+        <!-- Question Textarea -->
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-gray-700" for="pregunta-text">Pregunta</label>
+          <textarea formControlName="question" class="w-full rounded-xl border-gray-200 focus:border-blue-500 focus:ring-blue-500 transition-all text-gray-700" id="pregunta-text" placeholder="Escriba aquí la pregunta para la asamblea..." rows="3"></textarea>
+        </div>
+
+        <!-- Add Response Section -->
+        <div class="space-y-4">
+          <button (click)="addResponse()" class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-bold text-sm transition-colors" data-purpose="add-response-trigger" type="button">
+            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+              </svg>
+            </div>
+            Agregar Posible Respuesta
+          </button>
+
+          <!-- List of Added Responses -->
+          <div class="space-y-2" data-purpose="responses-list" formArrayName="responses">
+            <div *ngFor="let response of responses.controls; let i = index" class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100 group">
+              <input [formControlName]="i" type="text" class="flex-grow text-sm text-gray-700 bg-transparent border-none focus:ring-0" placeholder="Escriba una respuesta...">
+              <button (click)="removeResponse(i)" class="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all" type="button">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="bg-gray-50 px-6 py-4 flex flex-row-reverse gap-3" data-purpose="modal-footer">
+        <button [disabled]="!questionForm.valid" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-200 disabled:bg-gray-400" type="submit">
+          Guardar
+        </button>
+        <button (click)="cancel()" class="px-6 py-2.5 bg-white hover:bg-gray-100 text-gray-700 font-bold rounded-xl border border-gray-200 transition-all" type="button">
+          Cancelar
+        </button>
+        <button (click)="clear()" class="mr-auto px-4 py-2.5 text-red-500 hover:text-red-600 font-medium text-sm transition-all" data-purpose="clear-button" type="button">
+          Limpiar
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- END: Add Question Modal -->
+</div>
