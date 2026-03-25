@@ -5,12 +5,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { DataService } from '@services/data/data.service';
 import { ResponseDefault } from '@app/model/response-default.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-links',
   standalone: true,
-  imports: [MatCardModule, MatIcon, MatButtonModule, MatProgressSpinnerModule],
+  imports: [MatCardModule, MatIcon, MatButtonModule, MatProgressSpinnerModule, RouterModule],
   templateUrl: './links.component.html',
   styleUrl: './links.component.css'
 })
@@ -33,6 +34,7 @@ export class LinksComponent {
   showGeneralCard: Boolean = false
   showSuggestionBoxCard: Boolean = true
   showFAQAICard: Boolean = false
+  showAssembliesCard: boolean = true;
 
   constructor(public dataService: DataService) {
     this.waitBillingSpinner = true;

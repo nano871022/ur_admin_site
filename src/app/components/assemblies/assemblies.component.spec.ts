@@ -1,22 +1,55 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AssembliesComponent } from './assemblies.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { of } from 'rxjs';
+import { EventEmitter, Component } from '@angular/core';
+import { AssemblyService } from '@services/data/assembly.service';
+import { AddQuestionComponent } from '@components/asambleas/add-question/add-question.component';
+import { SurveyHistoryComponent } from '@components/asambleas/survey-history/survey-history.component';
+import { CurrentSurveyComponent } from '@components/asambleas/current-survey/current-survey.component';
+
+@Component({ selector: 'app-add-question', standalone: true, template: '' })
+class MockAddQuestionComponent {
+  closed = new EventEmitter<void>();
+}
+
+@Component({ selector: 'app-survey-history', standalone: true, template: '' })
+class MockSurveyHistoryComponent {}
+
+@Component({ selector: 'app-current-survey', standalone: true, template: '', inputs: ['totalRegisteredUsers'] })
+class MockCurrentSurveyComponent {
+  totalRegisteredUsers: number = 0;
+}
 
 describe('AssembliesComponent', () => {
   let component: AssembliesComponent;
   let fixture: ComponentFixture<AssembliesComponent>;
   let dialogSpy: jasmine.SpyObj<MatDialog>;
+  let assemblyServiceSpy: jasmine.SpyObj<AssemblyService>;
 
   beforeEach(async () => {
     dialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
+    assemblyServiceSpy = jasmine.createSpyObj('AssemblyService', ['getAllSurveis', 'getVotes', 'getAttendees', 'getCoefficient']);
+
+    assemblyServiceSpy.getAllSurveis.and.returnValue(Promise.resolve([]));
 
     await TestBed.configureTestingModule({
       imports: [AssembliesComponent, NoopAnimationsModule],
       providers: [
-        { provide: MatDialog, useValue: dialogSpy }
+        { provide: MatDialog, useValue: dialogSpy },
+        { provide: AssemblyService, useValue: assemblyServiceSpy }
       ]
-    }).compileComponents();
+    })
+    .overrideComponent(AssembliesComponent, {
+      remove: {
+        imports: [AddQuestionComponent, SurveyHistoryComponent, CurrentSurveyComponent]
+      },
+      add: {
+        imports: [MockAddQuestionComponent, MockSurveyHistoryComponent, MockCurrentSurveyComponent]
+      }
+    })
+    .compileComponents();
 
     fixture = TestBed.createComponent(AssembliesComponent);
     component = fixture.componentInstance;
@@ -39,9 +72,25 @@ describe('AssembliesComponent', () => {
     expect(component.surveysHistory[0].question).toBe('¿Aprueba el presupuesto para el año 2024?');
   });
 
-  it('should log when opening create survey popup', () => {
-    const consoleSpy = spyOn(console, 'log');
+  it('should open dialog when calling openCreateSurveyPopup', () => {
+    const closedEmitter = new EventEmitter<void>();
+    const dialogRefSpy = {
+      close: jasmine.createSpy('close'),
+      componentInstance: {
+        closed: closedEmitter
+      }
+    };
+
+    dialogSpy.open.and.returnValue(dialogRefSpy as any);
+
     component.openCreateSurveyPopup();
-    expect(consoleSpy).toHaveBeenCalledWith('Opening create survey popup...');
+
+    expect(dialogSpy.open).toHaveBeenCalled();
+
+    spyOn(component, 'loadSurveysHistory');
+    closedEmitter.emit();
+
+    expect(dialogRefSpy.close).toHaveBeenCalled();
+    expect(component.loadSurveysHistory).toHaveBeenCalled();
   });
 });
