@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AssembliesComponent } from './assemblies.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { EventEmitter, Component } from '@angular/core';
@@ -46,7 +46,10 @@ describe('AssembliesComponent', () => {
         imports: [AddQuestionComponent, SurveyHistoryComponent, CurrentSurveyComponent]
       },
       add: {
-        imports: [MockAddQuestionComponent, MockSurveyHistoryComponent, MockCurrentSurveyComponent]
+        imports: [MockAddQuestionComponent, MockSurveyHistoryComponent, MockCurrentSurveyComponent],
+        providers: [
+          { provide: MatDialog, useValue: dialogSpy }
+        ]
       }
     })
     .compileComponents();

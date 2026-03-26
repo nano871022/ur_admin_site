@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AssemblyService } from '@services/data/assembly.service';
+import { Answer } from '@app/model/survey.model';
 
 @Component({
   selector: 'app-add-question',
@@ -13,7 +15,7 @@ export class AddQuestionComponent {
   questionForm: FormGroup;
   @Output() closed = new EventEmitter<void>();
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private assemblyService: AssemblyService) {
     this.questionForm = this.fb.group({
       question: ['', [Validators.required, Validators.minLength(5)]],
       responses: this.fb.array([], [Validators.required, Validators.minLength(1)])
@@ -35,25 +37,18 @@ export class AddQuestionComponent {
   save(): void {
     if (this.questionForm.valid) {
       const formData = this.questionForm.value;
-      console.log('Sending data to server:', formData);
+      const mappedOptions: Answer[] = formData.responses.map((resp: string) => ({
+        value: resp,
+        votes: 0
+      }));
 
-      /*
-      Example of mock API call:
-
-      this.httpClient.post('/api/asambleas/preguntas', formData)
-        .subscribe({
-          next: (response) => {
-            console.log('Successfully saved:', response);
-            this.closed.emit();
-          },
-          error: (error) => {
-            console.error('Error saving question:', error);
-          }
+      this.assemblyService.createSurvey(formData.question, mappedOptions)
+        .then(() => {
+          this.closed.emit();
+        })
+        .catch((error) => {
+          console.error('Error saving question:', error);
         });
-      */
-
-      // For now, simulate success:
-      this.closed.emit();
     }
   }
 
