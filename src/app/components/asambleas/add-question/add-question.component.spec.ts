@@ -1,14 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddQuestionComponent } from './add-question.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AssemblyService } from '@services/data/assembly.service';
 
 describe('AddQuestionComponent', () => {
   let component: AddQuestionComponent;
   let fixture: ComponentFixture<AddQuestionComponent>;
+  let assemblyServiceSpy: jasmine.SpyObj<AssemblyService>;
 
   beforeEach(async () => {
+    assemblyServiceSpy = jasmine.createSpyObj('AssemblyService', ['createSurvey']);
+
     await TestBed.configureTestingModule({
-      imports: [AddQuestionComponent, ReactiveFormsModule]
+      imports: [AddQuestionComponent, ReactiveFormsModule],
+      providers: [
+        { provide: AssemblyService, useValue: assemblyServiceSpy }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AddQuestionComponent);
@@ -69,9 +76,9 @@ describe('AddQuestionComponent', () => {
     expect(component.responses.length).toBe(0);
   });
 
-  it('should emit closed and log data when save is called with valid form', () => {
+  it('should emit closed when save is called with valid form and API success', async () => {
     spyOn(component.closed, 'emit');
-    spyOn(console, 'log');
+    assemblyServiceSpy.createSurvey.and.returnValue(Promise.resolve({}));
 
     component.questionForm.get('question')?.setValue('Is this a test?');
     component.addResponse();
@@ -79,11 +86,25 @@ describe('AddQuestionComponent', () => {
 
     component.save();
 
-    expect(console.log).toHaveBeenCalledWith('Sending data to server:', {
-      question: 'Is this a test?',
-      responses: ['Yes']
-    });
+    await fixture.whenStable();
+
+    expect(assemblyServiceSpy.createSurvey).toHaveBeenCalledWith('Is this a test?', [{ value: 'Yes', votes: 0 }]);
     expect(component.closed.emit).toHaveBeenCalled();
+  });
+
+  it('should log error when save is called and API fails', async () => {
+    spyOn(console, 'error');
+    assemblyServiceSpy.createSurvey.and.returnValue(Promise.reject('API Error'));
+
+    component.questionForm.get('question')?.setValue('Is this a test?');
+    component.addResponse();
+    component.responses.at(0).setValue('Yes');
+
+    component.save();
+
+    await fixture.whenStable();
+
+    expect(console.error).toHaveBeenCalledWith('Error saving question:', 'API Error');
   });
 
   it('should not emit closed when save is called with invalid form', () => {
