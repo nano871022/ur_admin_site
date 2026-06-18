@@ -33,21 +33,21 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
   constructor(private assemblyService: AssemblyService) {}
 
   ngOnInit(): void {
-    this.loadData();
+    this.loadData(true);
   }
 
-  async loadData(): Promise<void> {
-    await this.loadActiveSurvey();
-    await this.loadStats();
+  async loadData(refresh: boolean = false): Promise<void> {
+    await this.loadActiveSurvey(refresh);
+    await this.loadStats(refresh);
   }
 
   ngOnDestroy(): void {
     this.stopTimer();
   }
 
-  async loadActiveSurvey(): Promise<void> {
+  async loadActiveSurvey(refresh: boolean = false): Promise<void> {
     try {
-      const surveys = await this.assemblyService.getAllSurveis();
+      const surveys = await this.assemblyService.getAllSurveis(refresh);
       // In this version we only take the first one as "active" or "recently closed"
       this.activeSurvey = surveys.length > 0 ? surveys[0] : null;
 
@@ -67,11 +67,11 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
     }
   }
 
-  async loadStats(): Promise<void> {
+  async loadStats(refresh: boolean = false): Promise<void> {
     if (!this.activeSurvey) return;
 
     try {
-      const votesData = await this.assemblyService.getVotes('active');
+      const votesData = await this.assemblyService.getVotes('active', refresh);
       this.receivedVotes = votesData.totalVotes || 0;
 
       this.calculateMissingAndPercentage();
@@ -124,7 +124,7 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
     if (window.confirm('¿Está seguro de que desea cerrar la votación?')) {
       try {
         await this.assemblyService.closeVotes('active');
-        await this.loadData();
+        await this.loadData(true);
       } catch (error) {
         console.error('Error closing voting:', error);
       }
@@ -135,7 +135,7 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
     if (window.confirm('¿Está seguro de que desea reiniciar la encuesta? Esta acción no se puede deshacer.')) {
       try {
         await this.assemblyService.restartSurvey('active');
-        await this.loadData();
+        await this.loadData(true);
       } catch (error) {
         console.error('Error restarting survey:', error);
       }

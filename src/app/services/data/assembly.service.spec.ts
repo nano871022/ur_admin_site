@@ -31,7 +31,7 @@ describe('AssemblyService', () => {
 
     await service.getAllSurveis();
 
-    expect(httpClientSpy.fetchAuth).toHaveBeenCalledWith('/api/assembly/all');
+    expect(httpClientSpy.fetchAuth).toHaveBeenCalledWith('/api/assembly/all', undefined, false);
   });
 
   it('should call getVotes endpoint with id', async () => {
@@ -43,7 +43,7 @@ describe('AssemblyService', () => {
 
     await service.getVotes(id);
 
-    expect(httpClientSpy.fetchAuth).toHaveBeenCalledWith(`/api/assembly/votes?id=${id}`);
+    expect(httpClientSpy.fetchAuth).toHaveBeenCalledWith(`/api/assembly/votes?id=${id}`, undefined, false);
   });
 
   it('should call getAttendees endpoint', async () => {
@@ -54,7 +54,7 @@ describe('AssemblyService', () => {
 
     await service.getAttendees();
 
-    expect(httpClientSpy.fetchAuth).toHaveBeenCalledWith('/api/assembly/attendees');
+    expect(httpClientSpy.fetchAuth).toHaveBeenCalledWith('/api/assembly/attendees', undefined, false);
   });
 
   it('should call getCoefficient endpoint', async () => {
@@ -65,7 +65,7 @@ describe('AssemblyService', () => {
 
     await service.getCoefficient();
 
-    expect(httpClientSpy.fetchAuth).toHaveBeenCalledWith('/api/assembly/coefficient');
+    expect(httpClientSpy.fetchAuth).toHaveBeenCalledWith('/api/assembly/coefficient', undefined, false);
   });
 
   it('should call restartSurvey endpoint with id', async () => {

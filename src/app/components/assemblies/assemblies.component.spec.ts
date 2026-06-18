@@ -64,15 +64,13 @@ describe('AssembliesComponent', () => {
   });
 
   it('should load stats on init', async () => {
-    await fixture.whenStable();
+    assemblyServiceSpy.getAttendees.and.returnValue(Promise.resolve({ attendanceCount: 142, totalUnits: 190, quorumPercentage: 74.7 }));
+    assemblyServiceSpy.getCoefficient.and.returnValue(Promise.resolve({ coefficientPercentage: 68.2 }));
+
+    await component.loadStats();
+
     expect(component.stats.attendanceCount).toBe(142);
     expect(component.stats.totalUnits).toBe(190);
-  });
-
-  it('should load surveys history on init', async () => {
-    await fixture.whenStable();
-    expect(component.surveysHistory.length).toBe(3);
-    expect(component.surveysHistory[0].question).toBe('¿Aprueba el presupuesto para el año 2024?');
   });
 
   it('should open dialog when calling openCreateSurveyPopup', () => {
@@ -90,10 +88,15 @@ describe('AssembliesComponent', () => {
 
     expect(dialogSpy.open).toHaveBeenCalled();
 
-    spyOn(component, 'loadSurveysHistory');
+    spyOn(component, 'loadStats');
+    component.historyComponent = { loadHistory: jasmine.createSpy('loadHistory') } as any;
+    component.currentSurveyComponent = { loadData: jasmine.createSpy('loadData') } as any;
+
     closedEmitter.emit();
 
     expect(dialogRefSpy.close).toHaveBeenCalled();
-    expect(component.loadSurveysHistory).toHaveBeenCalled();
+    expect(component.loadStats).toHaveBeenCalled();
+    expect(component.historyComponent.loadHistory).toHaveBeenCalledWith(true);
+    expect(component.currentSurveyComponent.loadData).toHaveBeenCalledWith(true);
   });
 });

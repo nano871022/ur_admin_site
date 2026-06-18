@@ -9,23 +9,23 @@ export class AssemblyService {
 
   constructor(private http: HttpClientService) { }
 
-  getAllSurveis(): Promise<Survey[]> {
-    return this.http.fetchAuth('/api/assembly/all')
+  getAllSurveis(refresh: boolean = false): Promise<Survey[]> {
+    return this.http.fetchAuth('/api/assembly/all', undefined, refresh)
       .then(response => response.json());
   }
 
-  getVotes(id: string): Promise<any> {
-    return this.http.fetchAuth(`/api/assembly/votes?id=${id}`)
+  getVotes(id: string, refresh: boolean = false): Promise<any> {
+    return this.http.fetchAuth(`/api/assembly/votes?id=${id}`, undefined, refresh)
       .then(response => response.json());
   }
 
-  getAttendees(): Promise<any> {
-    return this.http.fetchAuth('/api/assembly/attendees')
+  getAttendees(refresh: boolean = false): Promise<any> {
+    return this.http.fetchAuth('/api/assembly/attendees', undefined, refresh)
       .then(response => response.json());
   }
 
-  getCoefficient(): Promise<any> {
-    return this.http.fetchAuth('/api/assembly/coefficient')
+  getCoefficient(refresh: boolean = false): Promise<any> {
+    return this.http.fetchAuth('/api/assembly/coefficient', undefined, refresh)
       .then(response => response.json());
   }
 
