@@ -31,6 +31,7 @@ jobs:
           token: ${{ secrets.PROPERTIES_REPO_TOKEN }}
           ref: main          
           path: japl-properties
+          persist-credentials: true
           sparse-checkout: |
             ${{ vars.PATH_ENV }}
           sparse-checkout-cone-mode: false
