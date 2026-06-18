@@ -32,6 +32,7 @@ jobs:
           token: ${{ secrets.PROPERTIES_REPO_TOKEN }}
           ref: main
           path: properties-repo
+          persist-credentials: true
       - name: Copy environment file
         run: cp properties-repo/${{ vars.PATH_ENV }} src/environments/environment.ts
       - run: npm install && npm run build
