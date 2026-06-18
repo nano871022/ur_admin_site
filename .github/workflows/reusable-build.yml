@@ -1,4 +1,6 @@
 name: Reusable Build
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
 on:
   workflow_call:
@@ -20,7 +22,7 @@ jobs:
     environment: ${{ inputs.environment }}
     outputs:
       version: ${{ steps.get_version.outputs.version }}
-      
+
     steps:
       - uses: actions/checkout@v4
 
@@ -29,13 +31,13 @@ jobs:
         with:
           repository: ${{ github.repository_owner }}/japl-properties
           token: ${{ secrets.PROPERTIES_REPO_TOKEN }}
-          ref: main          
+          ref: main
           path: japl-properties
           persist-credentials: true
           sparse-checkout: |
             ${{ vars.PATH_ENV }}
           sparse-checkout-cone-mode: false
-          
+
       - name: Copy environment file
         run: |
           ENV_PATH=$(echo "${{ vars.PATH_ENV }}" | sed 's|^\./||')

@@ -1,10 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
+  let angularFireAuthMock: any;
+
   beforeEach(async () => {
+    angularFireAuthMock = {
+      onAuthStateChanged: jasmine.createSpy('onAuthStateChanged').and.returnValue(Promise.resolve(null))
+    };
+
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers: [
+        { provide: AngularFireAuth, useValue: angularFireAuthMock }
+      ]
     }).compileComponents();
   });
 
@@ -14,10 +25,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'ur_admin_site' title`, () => {
+  it(`should have the title 'Administración ur_admin_site'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ur_admin_site');
+    expect(app.title).toEqual('Administración ur_admin_site');
   });
 
   it('should render title', () => {

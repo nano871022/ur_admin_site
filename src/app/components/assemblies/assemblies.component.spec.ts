@@ -33,6 +33,8 @@ describe('AssembliesComponent', () => {
     assemblyServiceSpy = jasmine.createSpyObj('AssemblyService', ['getAllSurveis', 'getVotes', 'getAttendees', 'getCoefficient']);
 
     assemblyServiceSpy.getAllSurveis.and.returnValue(Promise.resolve([]));
+    assemblyServiceSpy.getAttendees.and.returnValue(Promise.resolve({ attendanceCount: 0, totalUnits: 0, quorumPercentage: 0 }));
+    assemblyServiceSpy.getCoefficient.and.returnValue(Promise.resolve({ coefficientPercentage: 0 }));
 
     await TestBed.configureTestingModule({
       imports: [AssembliesComponent, NoopAnimationsModule],

@@ -77,7 +77,7 @@ describe('SurveyHistoryComponent', () => {
     assemblyServiceMock.getAllSurveis.and.returnValue(Promise.resolve([
       {
         question: 'Missing fields question',
-        options: [{ text: 'Default Option' }]
+        options: [{ value: 'Default Option' }]
         // missing mostVotedOption, mostVotedCoefficient, timeUsed, createDate
       }
     ]));
