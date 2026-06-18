@@ -24,18 +24,18 @@ export class SurveyHistoryComponent implements OnInit {
   constructor(private assemblyService: AssemblyService) { }
 
   ngOnInit(): void {
-    this.loadHistory();
+    this.loadHistory(true);
   }
 
-  async loadHistory(): Promise<void> {
+  async loadHistory(refresh: boolean = false): Promise<void> {
     try {
-      const surveys = await this.assemblyService.getAllSurveis();
+      const surveys = await this.assemblyService.getAllSurveis(refresh);
       // Transform and sort history (newest to oldest)
       this.history = surveys
         .map((s: any) => ({
           id: s.id,
           question: s.question,
-          mostVotedOption: s.mostVotedOption || (s.options && s.options.length > 0 ? s.options[0].text : 'N/A'),
+          mostVotedOption: s.mostVotedOption || (s.options && s.options.length > 0 ? s.options[0].value : 'N/A'),
           mostVotedCoefficient: s.mostVotedCoefficient || 0,
           timeUsed: s.timeUsed || '00:00',
           createDate: s.createDate || s.createdAt || new Date()
