@@ -98,9 +98,10 @@ describe('CurrentSurveyComponent', () => {
   }));
 
   it('should show results when status is CLOSED', fakeAsync(() => {
-    mockSurveys[0].status = 'CLOSED';
-    mockSurveys[0].timeUsed = '05:24:00';
-    assemblyServiceSpy.getAllSurveis.and.returnValue(Promise.resolve(JSON.parse(JSON.stringify(mockSurveys))));
+    const closedSurveys: Survey[] = JSON.parse(JSON.stringify(mockSurveys));
+    closedSurveys[0].status = 'CLOSED';
+    closedSurveys[0].timeUsed = '05:24:00';
+    assemblyServiceSpy.getAllSurveis.and.returnValue(Promise.resolve(closedSurveys));
 
     fixture.detectChanges();
     tick(); // Resolve getAllSurveis

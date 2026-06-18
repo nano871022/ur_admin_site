@@ -1,4 +1,6 @@
 name: Reusable Deploy
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
 on:
   workflow_call:
@@ -14,7 +16,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-    
+
     steps:
       - uses: actions/checkout@v4
 

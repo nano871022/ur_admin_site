@@ -1,4 +1,6 @@
 name: Deploy to Firebase Hosting on merge
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
 on:
   push:
@@ -20,20 +22,19 @@ jobs:
     uses: ./.github/workflows/reusable-build.yml
     with:
       environment: ${{ github.event.inputs.environment || 'TorresSanSebastian' }}
-    secrets:
-      PROPERTIES_REPO_TOKEN: ${{ secrets.PROPERTIES_REPO_TOKEN }}
+    secrets: inherit
 
    deploy:
     needs: build
     uses: ./.github/workflows/reusable-deploy.yml
     with:
       environment: ${{ github.event.inputs.environment || 'TorresSanSebastian' }}
-    secrets:
-      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+    secrets: inherit
 
    tag:
     needs: deploy
     uses: ./.github/workflows/reusable-tag.yml
+    secrets: inherit
     permissions:
       contents: write
     with:

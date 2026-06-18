@@ -25,7 +25,7 @@ describe('StatsService', () => {
 
   it('should fetch active users from API and cache them', async () => {
     const mockResponse = {
-      json: () => Promise.resolve({ activeUsers: 150, startDate: '2023-01-01', endDate: '2023-01-07' })
+      json: () => Promise.resolve({ data: { activeUsers: 150, startDate: '2023-01-01', endDate: '2023-01-07' } })
     };
     httpClientSpy.fetchAuth.and.returnValue(Promise.resolve(mockResponse as Response));
 
@@ -54,7 +54,7 @@ describe('StatsService', () => {
     localStorage.setItem('active_users_stats', JSON.stringify({ value: 200, timestamp: longAgo }));
 
     const mockResponse = {
-      json: () => Promise.resolve({ activeUsers: 300 })
+      json: () => Promise.resolve({ data: { activeUsers: 300 } })
     };
     httpClientSpy.fetchAuth.and.returnValue(Promise.resolve(mockResponse as Response));
 
