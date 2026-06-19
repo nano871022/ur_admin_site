@@ -37,8 +37,8 @@ export class AddQuestionComponent {
   save(): void {
     if (this.questionForm.valid) {
       const formData = this.questionForm.value;
-      const mappedOptions: Answer[] = formData.responses.map((resp: string) => ({
-        text: resp,
+      const mappedOptions: Answer[] = this.responses.controls.map((control) => ({
+        text: control.value?.trim() || '',
         votesCount: 0
       }));
 
