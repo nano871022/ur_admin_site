@@ -4,20 +4,20 @@
       <div class="header-content">
         <div>
           <h2 class="header-title">Encuesta {{ activeSurvey.status === 'CLOSED' ? 'Cerrada' : 'Activa' }}</h2>
-          <p class="header-subtitle">Pregunta #1</p>
+          <p class="header-subtitle">{{ activeSurvey.id }}</p>
         </div>
-        <span class="live-badge" *ngIf="activeSurvey.status === 'OPEN'">EN VIVO</span>
-        <span class="closed-badge" *ngIf="activeSurvey.status === 'CLOSED'">CERRADA</span>
+        <div class="header-actions">
+          <button mat-icon-button (click)="manualRefresh()" title="Recargar">
+            <mat-icon>refresh</mat-icon>
+          </button>
+          <span class="live-badge" *ngIf="activeSurvey.status === 'OPEN'">EN VIVO</span>
+          <span class="closed-badge" *ngIf="activeSurvey.status === 'CLOSED'">CERRADA</span>
+        </div>
       </div>
     </div>
     <div class="survey-body">
       <!-- Horizontal Stats Cards -->
       <div class="stats-grid">
-        <div class="stat-card stat-default">
-          <p class="stat-label">Tiempo Transcurrido</p>
-          <p class="stat-value">{{ elapsedTime }}</p>
-          <p class="stat-unit">minutos</p>
-        </div>
         <div class="stat-card stat-brand">
           <p class="stat-label">Votos Recibidos</p>
           <p class="stat-value">{{ receivedVotes }}</p>
@@ -30,6 +30,11 @@
           <p class="stat-label">Porcentaje Votación</p>
           <p class="stat-value">{{ votingPercentage }}%</p>
         </div>
+        <div class="stat-card stat-default">
+          <p class="stat-label">Tiempo Transcurrido</p>
+          <p class="stat-value">{{ elapsedTime }}</p>
+          <p class="stat-unit">minutos</p>
+        </div>
       </div>
 
       <!-- Question text, Answers and Controls layout -->
@@ -41,7 +46,7 @@
           <!-- Open Survey Options (Tags) -->
           <div class="options-grid" *ngIf="activeSurvey.status === 'OPEN'">
             <button class="option-button" *ngFor="let option of activeSurvey.options">
-              {{ option.value | uppercase }}
+              {{ option.text | uppercase }}
             </button>
           </div>
 
@@ -49,10 +54,10 @@
           <div class="results-visuals" *ngIf="activeSurvey.status === 'CLOSED'">
             <div class="result-item" *ngFor="let option of activeSurvey.options; let i = index">
               <div class="result-info">
-                <span class="option-label">{{ option.value | uppercase }}</span>
+                <span class="option-label">{{ option.text | uppercase }}</span>
                 <div class="percentage-info">
-                  <span class="percentage-value" [class.primary-text]="i === 0">{{ getOptionPercentage(option.votes) }}%</span>
-                  <span class="votes-count">({{ option.votes }} votos)</span>
+                  <span class="percentage-value" [class.primary-text]="i === 0">{{ getOptionPercentage(option.votesCount) }}%</span>
+                  <span class="votes-count">({{ option.votesCount }} votos)</span>
                 </div>
               </div>
               <div class="progress-container">
@@ -60,7 +65,7 @@
                      [class.bg-primary]="i === 0"
                      [class.bg-gray-400]="i === 1"
                      [class.bg-gray-300]="i > 1"
-                     [style.width.%]="getOptionPercentage(option.votes)">
+                     [style.width.%]="getOptionPercentage(option.votesCount)">
                 </div>
               </div>
             </div>

@@ -15,13 +15,14 @@ describe('CurrentSurveyComponent', () => {
   const fixedDate = new Date('2024-01-01T12:00:00Z');
   const mockSurveys: Survey[] = [
     {
+      id: 'active-id',
       question: '¿Aprueba el presupuesto?',
       options: [
-        { value: 'SÍ', votes: 10 },
-        { value: 'NO', votes: 5 }
+        { text: 'SÍ', votesCount: 10 },
+        { text: 'NO', votesCount: 5 }
       ],
       timeUsed: '00:00:00',
-      createDate: fixedDate,
+      createdAt: fixedDate.toISOString(),
       status: 'OPEN'
     }
   ];
@@ -138,7 +139,7 @@ describe('CurrentSurveyComponent', () => {
     tick(); // closeVotes
     tick(); // reload loadActiveSurvey
     tick(); // reload loadStats
-    expect(assemblyServiceSpy.closeVotes).toHaveBeenCalledWith('active');
+    expect(assemblyServiceSpy.closeVotes).toHaveBeenCalledWith('active-id');
     expect(assemblyServiceSpy.getAllSurveis).toHaveBeenCalledTimes(2);
     discardPeriodicTasks();
   }));
@@ -165,7 +166,7 @@ describe('CurrentSurveyComponent', () => {
     tick(); // loadActiveSurvey call
     tick(); // loadStats call
 
-    expect(assemblyServiceSpy.restartSurvey).toHaveBeenCalledWith('active');
+    expect(assemblyServiceSpy.restartSurvey).toHaveBeenCalledWith('active-id');
     expect(assemblyServiceSpy.getAllSurveis).toHaveBeenCalledTimes(2); // Once on init, once on restart
     discardPeriodicTasks();
   }));

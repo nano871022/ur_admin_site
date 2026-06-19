@@ -38,8 +38,8 @@ export class AddQuestionComponent {
     if (this.questionForm.valid) {
       const formData = this.questionForm.value;
       const mappedOptions: Answer[] = formData.responses.map((resp: string) => ({
-        value: resp,
-        votes: 0
+        text: resp,
+        votesCount: 0
       }));
 
       this.assemblyService.createSurvey(formData.question, mappedOptions)

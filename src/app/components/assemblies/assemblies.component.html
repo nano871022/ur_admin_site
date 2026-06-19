@@ -39,19 +39,23 @@
     <!-- BEGIN: QuestionsSidebar (Now on the left) -->
     <aside class="lg:col-span-1" data-purpose="questions-management">
       <div class="flex flex-col h-full gap-4">
-        <button mat-raised-button color="primary" class="w-full !bg-emerald-600 hover:!bg-emerald-700 !text-white !font-bold !py-8 !px-6 !rounded-xl shadow-md btn-transition flex items-center justify-center gap-3" id="btnAddQuestion" (click)="openCreateSurveyPopup()">
+        <button mat-raised-button color="primary"
+                class="w-full !bg-emerald-600 hover:!bg-emerald-700 !text-white !font-bold !py-8 !px-6 !rounded-xl shadow-md btn-transition flex items-center justify-center gap-3 disabled:!bg-gray-400"
+                id="btnAddQuestion"
+                (click)="openCreateSurveyPopup()"
+                [disabled]="isSurveyOpen">
           <mat-icon>add</mat-icon>
           Agregar Nueva Pregunta
         </button>
 
-        <app-survey-history class="flex-1"></app-survey-history>
+        <app-survey-history class="flex-1" (surveyDeleted)="onSurveyAction()"></app-survey-history>
       </div>
     </aside>
     <!-- END: QuestionsSidebar -->
 
     <!-- BEGIN: ActiveSurveyInfo (Now on the right/center) -->
     <section class="lg:col-span-2" data-purpose="current-survey-status">
-      <app-current-survey [totalRegisteredUsers]="stats.totalUnits"></app-current-survey>
+      <app-current-survey [totalRegisteredUsers]="stats.totalUnits" (surveyStatusChanged)="onSurveyAction()"></app-current-survey>
     </section>
     <!-- END: ActiveSurveyInfo -->
   </div>

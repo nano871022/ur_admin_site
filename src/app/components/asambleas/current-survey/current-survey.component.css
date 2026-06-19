@@ -28,6 +28,12 @@
   justify-content: space-between;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .header-title {
   font-size: 1.25rem;
   font-weight: 700;

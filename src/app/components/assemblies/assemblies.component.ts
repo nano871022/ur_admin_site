@@ -38,6 +38,8 @@ export class AssembliesComponent implements OnInit {
     minRequiredPercentage: 51
   };
 
+  isSurveyOpen: boolean = false;
+
   constructor(
     private dialog: MatDialog,
     private assemblyService: AssemblyService
@@ -45,6 +47,7 @@ export class AssembliesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadStats();
+    this.checkActiveSurvey();
   }
 
   async loadStats(): Promise<void> {
@@ -66,7 +69,21 @@ export class AssembliesComponent implements OnInit {
     }
   }
 
+  async checkActiveSurvey(): Promise<void> {
+    try {
+      const surveys = await this.assemblyService.getAllSurveis(true);
+      this.isSurveyOpen = surveys.some(s => s.status === 'OPEN');
+    } catch (error) {
+      console.error('Error checking active survey:', error);
+    }
+  }
+
   openCreateSurveyPopup(): void {
+    if (this.isSurveyOpen) {
+      alert('Ya existe una encuesta abierta. Debe cerrarla antes de crear una nueva.');
+      return;
+    }
+
     const dialogRef = this.dialog.open(AddQuestionComponent, {
       width: '500px'
     });
@@ -74,6 +91,7 @@ export class AssembliesComponent implements OnInit {
     dialogRef.componentInstance.closed.subscribe(() => {
       dialogRef.close();
       this.loadStats();
+      this.checkActiveSurvey();
       if (this.historyComponent) {
         this.historyComponent.loadHistory(true);
       }
@@ -81,5 +99,10 @@ export class AssembliesComponent implements OnInit {
         this.currentSurveyComponent.loadData(true);
       }
     });
+  }
+
+  onSurveyAction(): void {
+    this.checkActiveSurvey();
+    this.loadStats();
   }
 }

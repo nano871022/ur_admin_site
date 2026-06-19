@@ -26,7 +26,8 @@ describe('SurveyHistoryComponent', () => {
           timeUsed: '12:00',
           createDate: '2023-01-02T10:00:00Z'
         }
-      ]))
+      ])),
+      deleteSurvey: jasmine.createSpy('deleteSurvey').and.returnValue(Promise.resolve({}))
     };
 
     await TestBed.configureTestingModule({
@@ -77,7 +78,7 @@ describe('SurveyHistoryComponent', () => {
     assemblyServiceMock.getAllSurveis.and.returnValue(Promise.resolve([
       {
         question: 'Missing fields question',
-        options: [{ value: 'Default Option' }]
+        options: [{ text: 'Default Option' }]
         // missing mostVotedOption, mostVotedCoefficient, timeUsed, createDate
       }
     ]));
@@ -96,9 +97,22 @@ describe('SurveyHistoryComponent', () => {
     expect(console.log).toHaveBeenCalledWith('Edit survey:', 'test-id');
   });
 
-  it('should log when deleteSurvey is called', () => {
-    spyOn(console, 'log');
-    component.deleteSurvey('test-id');
-    expect(console.log).toHaveBeenCalledWith('Delete survey:', 'test-id');
+  it('should call deleteSurvey and emit event when confirmed', async () => {
+    spyOn(window, 'confirm').and.returnValue(true);
+    spyOn(component.surveyDeleted, 'emit');
+
+    await component.deleteSurvey('test-id');
+
+    expect(assemblyServiceMock.deleteSurvey).toHaveBeenCalledWith('test-id');
+    expect(assemblyServiceMock.getAllSurveis).toHaveBeenCalled();
+    expect(component.surveyDeleted.emit).toHaveBeenCalled();
+  });
+
+  it('should not call deleteSurvey when cancelled', async () => {
+    spyOn(window, 'confirm').and.returnValue(false);
+
+    await component.deleteSurvey('test-id');
+
+    expect(assemblyServiceMock.deleteSurvey).not.toHaveBeenCalled();
   });
 });

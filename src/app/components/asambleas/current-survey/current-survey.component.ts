@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,6 +20,7 @@ import { Survey } from '@app/model/survey.model';
 })
 export class CurrentSurveyComponent implements OnInit, OnDestroy {
   @Input() totalRegisteredUsers: number = 0;
+  @Output() surveyStatusChanged = new EventEmitter<void>();
 
   activeSurvey: Survey | null = null;
   receivedVotes: number = 0;
@@ -28,12 +29,14 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
   elapsedTime: string = '00:00';
 
   private timerInterval: any;
+  private refreshInterval: any;
   private startTime: number = 0;
 
   constructor(private assemblyService: AssemblyService) {}
 
   ngOnInit(): void {
     this.loadData(true);
+    this.startAutoRefresh();
   }
 
   async loadData(refresh: boolean = false): Promise<void> {
@@ -43,6 +46,7 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.stopTimer();
+    this.stopAutoRefresh();
   }
 
   async loadActiveSurvey(refresh: boolean = false): Promise<void> {
@@ -51,14 +55,17 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
       // In this version we only take the first one as "active" or "recently closed"
       this.activeSurvey = surveys.length > 0 ? surveys[0] : null;
 
-      if (this.activeSurvey && this.activeSurvey.createDate) {
-        this.startTime = new Date(this.activeSurvey.createDate).getTime();
-        if (this.activeSurvey.status === 'OPEN') {
-          this.startTimer();
-        } else {
-          this.stopTimer();
-          if (this.activeSurvey.timeUsed) {
-            this.elapsedTime = this.activeSurvey.timeUsed.substring(0, 5); // Assuming HH:mm:ss format
+      if (this.activeSurvey) {
+        const createDateStr = this.activeSurvey.createdAt || this.activeSurvey.createDate;
+        if (createDateStr) {
+          this.startTime = new Date(createDateStr).getTime();
+          if (this.activeSurvey.status === 'OPEN') {
+            this.startTimer();
+          } else {
+            this.stopTimer();
+            if (this.activeSurvey.timeUsed) {
+              this.elapsedTime = this.activeSurvey.timeUsed.substring(0, 5); // Assuming HH:mm:ss format
+            }
           }
         }
       }
@@ -68,10 +75,10 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
   }
 
   async loadStats(refresh: boolean = false): Promise<void> {
-    if (!this.activeSurvey) return;
+    if (!this.activeSurvey || !this.activeSurvey.id) return;
 
     try {
-      const votesData = await this.assemblyService.getVotes('active', refresh);
+      const votesData = await this.assemblyService.getVotes(this.activeSurvey.id, refresh);
       this.receivedVotes = votesData.totalVotes || 0;
 
       this.calculateMissingAndPercentage();
@@ -120,11 +127,32 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
     return num < 10 ? `0${num}` : `${num}`;
   }
 
+  startAutoRefresh(): void {
+    this.stopAutoRefresh();
+    this.refreshInterval = setInterval(() => {
+      if (this.activeSurvey && this.activeSurvey.status === 'OPEN') {
+        this.loadStats(true);
+      }
+    }, 60000);
+  }
+
+  stopAutoRefresh(): void {
+    if (this.refreshInterval) {
+      clearInterval(this.refreshInterval);
+      this.refreshInterval = null;
+    }
+  }
+
+  async manualRefresh(): Promise<void> {
+    await this.loadData(true);
+  }
+
   async closeVoting(): Promise<void> {
-    if (window.confirm('¿Está seguro de que desea cerrar la votación?')) {
+    if (this.activeSurvey && this.activeSurvey.id && window.confirm('¿Está seguro de que desea cerrar la votación?')) {
       try {
-        await this.assemblyService.closeVotes('active');
+        await this.assemblyService.closeVotes(this.activeSurvey.id);
         await this.loadData(true);
+        this.surveyStatusChanged.emit();
       } catch (error) {
         console.error('Error closing voting:', error);
       }
@@ -132,18 +160,19 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
   }
 
   async restartSurvey(): Promise<void> {
-    if (window.confirm('¿Está seguro de que desea reiniciar la encuesta? Esta acción no se puede deshacer.')) {
+    if (this.activeSurvey && this.activeSurvey.id && window.confirm('¿Está seguro de que desea reiniciar la encuesta? Esta acción no se puede deshacer.')) {
       try {
-        await this.assemblyService.restartSurvey('active');
+        await this.assemblyService.restartSurvey(this.activeSurvey.id);
         await this.loadData(true);
+        this.surveyStatusChanged.emit();
       } catch (error) {
         console.error('Error restarting survey:', error);
       }
     }
   }
 
-  getOptionPercentage(votes: number): number {
-    if (this.receivedVotes === 0) return 0;
+  getOptionPercentage(votes: number | undefined): number {
+    if (!votes || this.receivedVotes === 0) return 0;
     return Math.round((votes / this.receivedVotes) * 100);
   }
 }

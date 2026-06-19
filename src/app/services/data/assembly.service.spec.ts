@@ -89,7 +89,7 @@ describe('AssemblyService', () => {
     };
     httpClientSpy.fetchAuth.and.returnValue(Promise.resolve(mockResponse as Response));
     const question = 'How are you?';
-    const options: Answer[] = [{ value: 'Good', votes: 0 }, { value: 'Bad', votes: 0 }];
+    const options: Answer[] = [{ text: 'Good', votesCount: 0 }, { text: 'Bad', votesCount: 0 }];
 
     await service.createSurvey(question, options);
 
@@ -111,6 +111,36 @@ describe('AssemblyService', () => {
     expect(httpClientSpy.fetchAuth).toHaveBeenCalledWith('/api/assembly/close', jasmine.objectContaining({
       method: 'POST',
       body: JSON.stringify({ id })
+    }));
+  });
+
+  it('should call deleteSurvey endpoint with id', async () => {
+    const mockResponse = {
+      json: () => Promise.resolve({})
+    };
+    httpClientSpy.fetchAuth.and.returnValue(Promise.resolve(mockResponse as Response));
+    const id = '123';
+
+    await service.deleteSurvey(id);
+
+    expect(httpClientSpy.fetchAuth).toHaveBeenCalledWith(`/api/assembly/delete?id=${id}`, jasmine.objectContaining({
+      method: 'DELETE'
+    }));
+  });
+
+  it('should call createAssembly endpoint with year and date', async () => {
+    const mockResponse = {
+      json: () => Promise.resolve({})
+    };
+    httpClientSpy.fetchAuth.and.returnValue(Promise.resolve(mockResponse as Response));
+    const year = 2024;
+    const date = '2024-05-20';
+
+    await service.createAssembly(year, date);
+
+    expect(httpClientSpy.fetchAuth).toHaveBeenCalledWith('/api/assembly/init', jasmine.objectContaining({
+      method: 'PUT',
+      body: JSON.stringify({ year, date })
     }));
   });
 });

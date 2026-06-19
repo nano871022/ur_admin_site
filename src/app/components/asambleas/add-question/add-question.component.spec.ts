@@ -88,7 +88,7 @@ describe('AddQuestionComponent', () => {
 
     await fixture.whenStable();
 
-    expect(assemblyServiceSpy.createSurvey).toHaveBeenCalledWith('Is this a test?', [{ value: 'Yes', votes: 0 }]);
+    expect(assemblyServiceSpy.createSurvey).toHaveBeenCalledWith('Is this a test?', [{ text: 'Yes', votesCount: 0 }]);
     expect(component.closed.emit).toHaveBeenCalled();
   });
 
