@@ -43,10 +43,10 @@ export class AssemblyService {
     }).then(response => response.json());
   }
 
-  closeVotes(id: string): Promise<any> {
+  closeVotes(id: string, timeUsed?: string): Promise<any> {
     return this.http.fetchAuth('/api/assembly/close', {
       method: 'POST',
-      body: JSON.stringify({ id })
+      body: JSON.stringify({ id, timeUsed })
     }).then(response => response.json());
   }
 

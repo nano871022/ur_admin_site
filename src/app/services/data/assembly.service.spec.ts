@@ -99,18 +99,19 @@ describe('AssemblyService', () => {
     }));
   });
 
-  it('should call closeVotes endpoint with id', async () => {
+  it('should call closeVotes endpoint with id and timeUsed', async () => {
     const mockResponse = {
       json: () => Promise.resolve({})
     };
     httpClientSpy.fetchAuth.and.returnValue(Promise.resolve(mockResponse as Response));
     const id = '123';
+    const timeUsed = '05:30';
 
-    await service.closeVotes(id);
+    await service.closeVotes(id, timeUsed);
 
     expect(httpClientSpy.fetchAuth).toHaveBeenCalledWith('/api/assembly/close', jasmine.objectContaining({
       method: 'POST',
-      body: JSON.stringify({ id })
+      body: JSON.stringify({ id, timeUsed })
     }));
   });
 

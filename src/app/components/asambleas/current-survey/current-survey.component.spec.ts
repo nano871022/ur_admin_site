@@ -130,16 +130,17 @@ describe('CurrentSurveyComponent', () => {
     expect(component.getOptionPercentage(10)).toBe(0);
   });
 
-  it('should call closeVotes and reload data when closeVoting is confirmed', fakeAsync(() => {
+  it('should call closeVotes with elapsedTime and reload data when closeVoting is confirmed', fakeAsync(() => {
     fixture.detectChanges();
     tick();
     tick();
+    component.elapsedTime = '02:45';
     spyOn(window, 'confirm').and.returnValue(true);
     component.closeVoting();
     tick(); // closeVotes
     tick(); // reload loadActiveSurvey
     tick(); // reload loadStats
-    expect(assemblyServiceSpy.closeVotes).toHaveBeenCalledWith('active-id');
+    expect(assemblyServiceSpy.closeVotes).toHaveBeenCalledWith('active-id', '02:45');
     expect(assemblyServiceSpy.getAllSurveis).toHaveBeenCalledTimes(2);
     discardPeriodicTasks();
   }));
@@ -155,11 +156,12 @@ describe('CurrentSurveyComponent', () => {
     discardPeriodicTasks();
   }));
 
-  it('should call restartSurvey when restartSurvey is confirmed', fakeAsync(() => {
+  it('should call restartSurvey and reset startTime when restartSurvey is confirmed', fakeAsync(() => {
     fixture.detectChanges();
     tick(); // Init calls
     tick();
 
+    const now = Date.now();
     spyOn(window, 'confirm').and.returnValue(true);
     component.restartSurvey();
     tick(); // restartSurvey call
@@ -167,6 +169,7 @@ describe('CurrentSurveyComponent', () => {
     tick(); // loadStats call
 
     expect(assemblyServiceSpy.restartSurvey).toHaveBeenCalledWith('active-id');
+    expect(component['startTime']).toBeGreaterThanOrEqual(now);
     expect(assemblyServiceSpy.getAllSurveis).toHaveBeenCalledTimes(2); // Once on init, once on restart
     discardPeriodicTasks();
   }));

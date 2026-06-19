@@ -150,7 +150,7 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
   async closeVoting(): Promise<void> {
     if (this.activeSurvey && this.activeSurvey.id && window.confirm('¿Está seguro de que desea cerrar la votación?')) {
       try {
-        await this.assemblyService.closeVotes(this.activeSurvey.id);
+        await this.assemblyService.closeVotes(this.activeSurvey.id, this.elapsedTime);
         await this.loadData(true);
         this.surveyStatusChanged.emit();
       } catch (error) {
@@ -164,6 +164,8 @@ export class CurrentSurveyComponent implements OnInit, OnDestroy {
       try {
         await this.assemblyService.restartSurvey(this.activeSurvey.id);
         await this.loadData(true);
+        this.startTime = Date.now(); // Reset timer locally after loading data to ensure it's fresh
+        this.updateElapsedTime();
         this.surveyStatusChanged.emit();
       } catch (error) {
         console.error('Error restarting survey:', error);
