@@ -15,13 +15,14 @@ describe('CurrentSurveyComponent', () => {
   const fixedDate = new Date('2024-01-01T12:00:00Z');
   const mockSurveys: Survey[] = [
     {
+      id: 'active-id',
       question: '¿Aprueba el presupuesto?',
       options: [
-        { value: 'SÍ', votes: 10 },
-        { value: 'NO', votes: 5 }
+        { text: 'SÍ', votesCount: 10 },
+        { text: 'NO', votesCount: 5 }
       ],
       timeUsed: '00:00:00',
-      createDate: fixedDate,
+      createdAt: fixedDate.toISOString(),
       status: 'OPEN'
     }
   ];
@@ -129,16 +130,17 @@ describe('CurrentSurveyComponent', () => {
     expect(component.getOptionPercentage(10)).toBe(0);
   });
 
-  it('should call closeVotes and reload data when closeVoting is confirmed', fakeAsync(() => {
+  it('should call closeVotes with elapsedTime and reload data when closeVoting is confirmed', fakeAsync(() => {
     fixture.detectChanges();
     tick();
     tick();
+    component.elapsedTime = '02:45';
     spyOn(window, 'confirm').and.returnValue(true);
     component.closeVoting();
     tick(); // closeVotes
     tick(); // reload loadActiveSurvey
     tick(); // reload loadStats
-    expect(assemblyServiceSpy.closeVotes).toHaveBeenCalledWith('active');
+    expect(assemblyServiceSpy.closeVotes).toHaveBeenCalledWith('active-id', '02:45');
     expect(assemblyServiceSpy.getAllSurveis).toHaveBeenCalledTimes(2);
     discardPeriodicTasks();
   }));
@@ -154,18 +156,20 @@ describe('CurrentSurveyComponent', () => {
     discardPeriodicTasks();
   }));
 
-  it('should call restartSurvey when restartSurvey is confirmed', fakeAsync(() => {
+  it('should call restartSurvey and reset startTime when restartSurvey is confirmed', fakeAsync(() => {
     fixture.detectChanges();
     tick(); // Init calls
     tick();
 
+    const now = Date.now();
     spyOn(window, 'confirm').and.returnValue(true);
     component.restartSurvey();
     tick(); // restartSurvey call
     tick(); // loadActiveSurvey call
     tick(); // loadStats call
 
-    expect(assemblyServiceSpy.restartSurvey).toHaveBeenCalledWith('active');
+    expect(assemblyServiceSpy.restartSurvey).toHaveBeenCalledWith('active-id');
+    expect(component['startTime']).toBeGreaterThanOrEqual(now);
     expect(assemblyServiceSpy.getAllSurveis).toHaveBeenCalledTimes(2); // Once on init, once on restart
     discardPeriodicTasks();
   }));

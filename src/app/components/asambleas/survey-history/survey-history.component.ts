@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AssemblyService } from '@services/data/assembly.service';
 
@@ -19,6 +19,7 @@ export interface SurveyHistoryItem {
   styleUrls: ['./survey-history.component.css']
 })
 export class SurveyHistoryComponent implements OnInit {
+  @Output() surveyDeleted = new EventEmitter<void>();
   history: SurveyHistoryItem[] = [];
 
   constructor(private assemblyService: AssemblyService) { }
@@ -35,7 +36,7 @@ export class SurveyHistoryComponent implements OnInit {
         .map((s: any) => ({
           id: s.id,
           question: s.question,
-          mostVotedOption: s.mostVotedOption || (s.options && s.options.length > 0 ? s.options[0].value : 'N/A'),
+          mostVotedOption: s.mostVotedOption || (s.options && s.options.length > 0 ? (s.options[0].text || s.options[0].value) : 'N/A'),
           mostVotedCoefficient: s.mostVotedCoefficient || 0,
           timeUsed: s.timeUsed || '00:00',
           createDate: s.createDate || s.createdAt || new Date()
@@ -51,7 +52,15 @@ export class SurveyHistoryComponent implements OnInit {
     // Logic for editing disabled or not according to votes cast is usually handled in template
   }
 
-  deleteSurvey(id?: string): void {
-    console.log('Delete survey:', id);
+  async deleteSurvey(id?: string): Promise<void> {
+    if (id && window.confirm('¿Está seguro de que desea eliminar esta encuesta?')) {
+      try {
+        await this.assemblyService.deleteSurvey(id);
+        await this.loadHistory(true);
+        this.surveyDeleted.emit();
+      } catch (error) {
+        console.error('Error deleting survey:', error);
+      }
+    }
   }
 }

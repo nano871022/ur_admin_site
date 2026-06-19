@@ -1,13 +1,15 @@
 export interface Answer {
-  value: string;
-  votes: number;
+  text: string;
+  votesCount: number;
+  coefficientVotes?: number;
 }
 
 export interface Survey {
   id?: string;
   question: string;
   options: Answer[];
-  timeUsed: string;
-  createDate: Date;
+  timeUsed?: string;
+  createDate?: string | Date;
+  createdAt?: string;
   status: 'OPEN' | 'CLOSED';
 }
